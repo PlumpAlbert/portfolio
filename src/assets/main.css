@@ -18,10 +18,6 @@ body {
   color: var(--foreground);
 }
 
-div#app {
-  padding: 0 20px;
-}
-
 @media (min-width: 400px) {
   html,
   body {
