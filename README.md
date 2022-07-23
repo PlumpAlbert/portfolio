@@ -1,41 +1,16 @@
 # rt-view
 
-This template should help get you started developing with Vue 3 in Vite.
+Dashboard view for [RescueTime](https://rescuetime.com/).
 
-## Recommended IDE Setup
+The goal of this project is merely to develop my skills in building
+web-applications using [Vue3](https://vuejs.org/) framework.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Roadmap
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+- [ ] create a design for a project:
+    - [ ] create view for user authorization;
+    - [x] create view with user's statistics.
+- [ ] implementing design into a web-app:
+    - [ ] create static markup for login page;
+    - [x] create static markup for statistics page;
+    - [ ] fetch user data using RescueTime API and display it on page.
