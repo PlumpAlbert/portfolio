@@ -13,4 +13,4 @@ web-applications using [Vue3](https://vuejs.org/) framework.
 - [ ] implementing design into a web-app:
     - [ ] create static markup for login page;
     - [x] create static markup for statistics page;
-    - [ ] fetch user data using RescueTime API and display it on page.
+    - [x] fetch user data using RescueTime API and display it on page.
