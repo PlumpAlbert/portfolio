@@ -1,9 +1,23 @@
-<script setup></script>
+<script setup>
+import format from "date-fns/format";
+import { useRouter } from "vue-router";
+import { useApiKeyStore } from "../store/apiKey.js";
+
+const router = useRouter();
+const { setApiKey } = useApiKeyStore();
+
+const handleFormSubmit = e => {
+  e.preventDefault();
+  const input = e.target["apiKey"];
+  setApiKey(input.value);
+  router.push("/day/" + format(new Date(), "yyyy-MM-dd"));
+};
+</script>
 
 <template>
   <main class="flex flex-col gap-8 items-center">
     <h1 class="text-4xl uppercase text-white">RescueTime<br />Dashboard</h1>
-    <form class="flex flex-col gap-4" action="">
+    <form class="flex flex-col gap-4" action="" @submit="handleFormSubmit">
       <label for="apiKey" class="text-base">To see your progress enter your API key below:</label>
       <input id="apiKey" type="text"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />

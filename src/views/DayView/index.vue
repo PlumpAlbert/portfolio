@@ -8,10 +8,11 @@ import { useRouter, useRoute } from "vue-router";
 import StatLine from './StatLine.vue';
 // custom imports
 import { getDayAnalytics } from "../../api/index.js";
+import {useApiKeyStore} from '../../store/apiKey.js';
 
 const router = useRouter();
 const route = useRoute();
-
+const {apiKey} = useApiKeyStore();
 const date = computed(() => route.params.date);
 
 //#region Data fetching
@@ -20,7 +21,7 @@ const statsResponse = ref({response: undefined});
 watch(
   () => date.value,
   newDate =>{
-    statsResponse.value = getDayAnalytics({ dateStart: newDate, dateEnd: newDate })
+    statsResponse.value = getDayAnalytics({ apiKey, dateStart: newDate, dateEnd: newDate })
   }
 );
 
