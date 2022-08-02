@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "date-fns": "^2.29.1",
+    "flowbite": "^1.5.1",
     "pinia": "^2.0.16",
     "vue": "^3.2.37",
     "vue-router": "^4.1.2"
