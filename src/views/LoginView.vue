@@ -1,10 +1,17 @@
 <script setup>
 import format from "date-fns/format";
+import { watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import { useApiKeyStore } from "../store/apiKey.js";
 
 const router = useRouter();
-const { setApiKey } = useApiKeyStore();
+const { apiKey, setApiKey } = useApiKeyStore();
+
+watchEffect(() => {
+  if (apiKey) {
+    router.push("/day/" + format(new Date(), "yyyy-MM-dd"));
+  }
+});
 
 const handleFormSubmit = e => {
   e.preventDefault();
