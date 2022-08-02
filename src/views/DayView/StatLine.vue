@@ -12,19 +12,23 @@ const LABELS = {
 
 const props = defineProps({
   label: String,
-  value: String,
+  value: Number,
 });
 
 const label = LABELS[props.label];
 
 let color = ref(`var(--${label.toLowerCase().replace(' ', '-')}-color)`);
 
-const duration = intervalToDuration({start: 0, end: props.value * 1000});
+const duration = intervalToDuration({ start: 0, end: props.value * 1000 });
 
 let time = '';
-if (duration.seconds > 0) time = `${duration.seconds} s`;
-if (duration.minutes > 0) time = `${duration.minutes} min ${time}`;
-if (duration.hours > 0) time = `${duration.hours} h ${time}`;
+if (duration.hours > 0) {
+  time = `${duration.hours} h ${duration.minutes} m`;
+} else if (duration.minutes > 0) {
+  time = `${duration.minutes} m ${duration.seconds} s`;
+} else {
+  time = `${duration.seconds} s`;
+}
 </script>
 
 <template>

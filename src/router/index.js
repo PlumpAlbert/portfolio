@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
-import StatsView from "../views/StatsView/index.vue";
+import DayView from "../views/DayView/index.vue";
 
 export const routes = [
-  { path: "/", component: StatsView, label: "statistics", icon: "bar_chart" },
+  { path: "/day/:date", component: DayView, label: "statistics", icon: "bar_chart" },
 ];
 
 export default createRouter({
