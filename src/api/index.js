@@ -7,11 +7,11 @@ const API_URL = "https://cors.plumpalbert.xyz/www.rescuetime.com/anapi";
  * @param {string} params.dateStart
  * @param {string} params.dateEnd
  */
-export const getDayAnalytics = ({dateStart, dateEnd}) => {
+export const getDayAnalytics = ({apiKey, dateStart, dateEnd}) => {
   const {response, request, abort, isFetching} = useApi(`${API_URL}/data`, {
     method: "GET",
     params: {
-      key: "B63f6zjOfHA8RJYaNGoqUtTltscviAzDz7vocBKN",
+      key: apiKey,
       format: "json",
       by: "rank",
       interval: "day",
