@@ -1,26 +1,25 @@
-import axios from "axios";
+import useApi from "../utils/hooks/useApi";
 const API_URL = "https://cors.plumpalbert.xyz/www.rescuetime.com/anapi";
 
 /**
  *
- * @param {Date} date
+ * @param {object} params
+ * @param {string} params.dateStart
+ * @param {string} params.dateEnd
  */
-export const getDayAnalytics = async date => {
-  const [day, _] = date.toISOString().split("T");
-  window.abortController = new AbortController();
-  const response = await axios.get(`${API_URL}/data`, {
-    signal: window.abortController.signal,
+export const getDayAnalytics = ({dateStart, dateEnd}) => {
+  const {response, request, abort, isFetching} = useApi(`${API_URL}/data`, {
+    method: "GET",
     params: {
       key: "B63f6zjOfHA8RJYaNGoqUtTltscviAzDz7vocBKN",
       format: "json",
       by: "rank",
       interval: "day",
-      restrict_begin: day,
-      restrict_end: day,
+      restrict_begin: dateStart,
+      restrict_end: dateEnd,
       restrict_kind: "productivity",
     },
   });
-  window.abortController = undefined;
-  if (response.status !== 200) throw response;
-  return response.data;
+  request();
+  return {response, isFetching, abort};
 };
