@@ -1,3 +1,12 @@
+const TIME_SPENT = 1;
+const PRODUCTIVITY_ID = 3;
+const PRODUCTIVITY_ENUM = {
+  "-2": "veryDistracting",
+  "-1": "distracting",
+  0: "neutral",
+  1: "productive",
+  2: "veryProductive",
+};
 /**
  * @param {Context} context
  * @param {string} date
@@ -8,13 +17,23 @@ export const getDateAnalytics = async ({state, actions, effects}, date) => {
   } else {
     state.days[date].isFetching = true;
   }
-  actions.days.setDateAnalytics({
+  const response = await effects.days.fetchDateAnalytics({
+    apiKey: state.apiKey,
     date,
-    data: await effects.days.fetchDateAnalytics({
-      apiKey: state.apiKey,
-      date,
-    }),
   });
+  /** @type {import('./state').IAnalytics['data']} */
+  let data = {
+    veryProductive: 0,
+    productive: 0,
+    neutral: 0,
+    distracting: 0,
+    veryDistracting: 0,
+  };
+  response.rows.forEach(row => {
+    data[PRODUCTIVITY_ENUM[row[PRODUCTIVITY_ID]]] = row[TIME_SPENT];
+  });
+
+  actions.days.setDateAnalytics({date, data});
 };
 
 /**
@@ -24,11 +43,11 @@ export const getDateAnalytics = async ({state, actions, effects}, date) => {
  * @param {import('./state').IAnalytics['data']} value.data
  */
 export const setDateAnalytics = ({state}, {date, data}) => {
-  if (!state[date]) {
-    state[date] = {date, isFetching: false, data};
+  if (!state.days[date]) {
+    state.days[date] = {date, isFetching: false, data};
   } else {
-    state[date].isFetching = false;
-    state[date].data = data;
+    state.days[date].isFetching = false;
+    state.days[date].data = data;
   }
 };
 
