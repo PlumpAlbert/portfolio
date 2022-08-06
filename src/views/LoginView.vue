@@ -2,13 +2,15 @@
 import format from "date-fns/format";
 import { watchEffect } from "vue";
 import { useRouter } from "vue-router";
-import { useApiKeyStore } from "../store/apiKey.js";
+// overmind
+import { useState, useActions } from "../utils/hooks/useOvermind.js";
 
 const router = useRouter();
-const { apiKey, setApiKey } = useApiKeyStore();
+const apiKey = useState(state => state.apiKey);
+const setApiKey = useActions(actions => actions.setApiKey);
 
 watchEffect(() => {
-  if (apiKey) {
+  if (apiKey.value) {
     router.push("/day/" + format(new Date(), "yyyy-MM-dd"));
   }
 });
