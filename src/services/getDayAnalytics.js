@@ -1,5 +1,5 @@
+import {API_URL} from ".";
 import useApi from "../utils/hooks/useApi";
-const API_URL = "https://cors.plumpalbert.xyz/www.rescuetime.com/anapi";
 
 /**
  *
