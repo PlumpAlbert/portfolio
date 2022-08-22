@@ -5,25 +5,31 @@ import { computed } from "@vue/reactivity";
 import { ref, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 // custom components
-import StatLine from './StatLine.vue';
+import StatLine from "./StatLine.vue";
 // custom imports
-import { getDayAnalytics } from "../../api/index.js";
-import {useApiKeyStore} from '../../store/apiKey.js';
+import { getDayAnalytics } from "../../services/index.js";
+import { useApiKeyStore } from "../../store/apiKey.js";
 
 const router = useRouter();
 const route = useRoute();
-const {apiKey} = useApiKeyStore();
+const apiKeyStore = useApiKeyStore();
 const date = computed(() => route.params.date);
 
 //#region Data fetching
 
-const statsResponse = ref({response: undefined});
-watch(
-  () => date.value,
-  newDate =>{
-    statsResponse.value = getDayAnalytics({ apiKey, dateStart: newDate, dateEnd: newDate })
-  }
-);
+const statsResponse = ref({ response: undefined });
+watch(date, newDate => {
+  statsResponse.value = getDayAnalytics({
+    apiKey: apiKeyStore.apiKey,
+    dateStart: newDate,
+    dateEnd: newDate,
+  });
+});
+statsResponse.value = getDayAnalytics({
+  apiKey: apiKeyStore.apiKey,
+  dateStart: date.value,
+  dateEnd: date.value,
+});
 
 //#endregion
 
@@ -76,8 +82,13 @@ const dateChange = e => {
 
     <section class="flex flex-col gap-5">
       <i v-if="statsResponse.isFetching" class="material-symbols-rounded self-center animate-spin">cached</i>
-      <StatLine v-if="statsResponse.response && !statsResponse.isFetching" v-for="row in statsResponse.response.rows" :label="row.at(-1).toString()" :value="row[1]" />
-      <p v-if="(!statsResponse.response || (statsResponse.response && !statsResponse.response.rows.length)) && !statsResponse.isFetching" class="self-center m-0 text-base">
+      <StatLine v-if="statsResponse.response && !statsResponse.isFetching" v-for="row in statsResponse.response.rows"
+        :label="row.at(-1).toString()" :value="row[1]" />
+      <p v-if="
+        (!statsResponse.response ||
+          (statsResponse.response && !statsResponse.response.rows.length)) &&
+        !statsResponse.isFetching
+      " class="self-center m-0 text-base">
         No stats for this day!
       </p>
     </section>

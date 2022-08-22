@@ -9,6 +9,6 @@ export const useApiKeyStore = defineStore("apiKey", {
   },
   persist: {
     storage: localStorage,
-    paths: ['apiKey']
-  }
+    paths: ["apiKey"],
+  },
 });

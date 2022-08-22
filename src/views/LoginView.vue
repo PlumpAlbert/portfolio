@@ -5,10 +5,10 @@ import { useRouter } from "vue-router";
 import { useApiKeyStore } from "../store/apiKey.js";
 
 const router = useRouter();
-const { apiKey, setApiKey } = useApiKeyStore();
+const apiKeyStore = useApiKeyStore();
 
 watchEffect(() => {
-  if (apiKey) {
+  if (apiKeyStore.apiKey) {
     router.push("/day/" + format(new Date(), "yyyy-MM-dd"));
   }
 });
@@ -16,7 +16,7 @@ watchEffect(() => {
 const handleFormSubmit = e => {
   e.preventDefault();
   const input = e.target["apiKey"];
-  setApiKey(input.value);
+  apiKeyStore.setApiKey(input.value);
   router.push("/day/" + format(new Date(), "yyyy-MM-dd"));
 };
 </script>
