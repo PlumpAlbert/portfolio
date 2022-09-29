@@ -10,6 +10,7 @@ div#__next {
   height: 100%;
   width: 100%;
   display: flex;
+  @apply font-sans;
 }
 body {
   @apply bg-neutral-100 text-neutral-900;

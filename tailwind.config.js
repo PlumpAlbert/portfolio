@@ -1,10 +1,15 @@
+const defaults = require("tailwindcss/defaultTheme")
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "src/**/*.{tsx,sass,css}"
-  ],
+  content: ["src/**/*.{tsx,sass,css}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        ...defaults.fontFamily,
+        sans: ["Inter", ...defaults.fontFamily.sans],
+      },
+    },
   },
   plugins: [],
 }
