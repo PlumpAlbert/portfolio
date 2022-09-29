@@ -5,7 +5,9 @@ import { trpc } from "@common/utils/trpc"
 import styles from "../styles/Home.module.css"
 
 const Home: NextPage = () => {
-  const { data, error, isLoading } = trpc.hello.useQuery({ text: "NextJS" })
+  const { data, error, isLoading } = trpc.hello.greet.useQuery({
+    text: "NextJS",
+  })
   return (
     <div className={styles.container}>
       <Head>
