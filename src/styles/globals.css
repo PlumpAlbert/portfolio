@@ -9,6 +9,9 @@ div#__next {
   margin: 0;
   height: 100%;
   width: 100%;
+  display: flex;
+}
+body {
   @apply bg-neutral-100 text-neutral-900;
 }
 
@@ -19,6 +22,19 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.input {
+  @apply px-3 py-1 rounded-md leading-normal bg-neutral-200 text-neutral-900
+  dark:bg-gray-700 dark:text-white/90;
+}
+
+.button {
+  @apply font-medium rounded text-sm px-4 py-2 text-center
+  text-white bg-blue-600
+    focus:ring-4 focus:outline-none focus:ring-blue-300
+  hover:bg-blue-700
+  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
 }
 
 @media (prefers-color-scheme: dark) {
