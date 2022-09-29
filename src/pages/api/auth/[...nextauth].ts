@@ -1,8 +1,11 @@
 import NextAuth, { type NextAuthOptions } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 
 export const authOptions: NextAuthOptions = {
+  pages: {
+    signIn: "/auth/sign-in",
+  },
   providers: [
     Credentials({
       name: "API key",
@@ -17,12 +20,23 @@ export const authOptions: NextAuthOptions = {
         if (credentials?.apiKey) {
           // Make an API call to RescueTime to check if key is valid
           const { apiKey } = credentials
-          const { status } = await axios.get(
-            "https://www.rescuetime.com/anapi/daily_summary_feed",
-            { params: { key: apiKey } }
-          )
-          if (status !== 400) {
-            return { id: apiKey }
+          try {
+            const { status } = await axios.get(
+              "https://www.rescuetime.com/anapi/daily_summary_feed",
+              { params: { key: apiKey } }
+            )
+            console.debug("> sign in status: ", status)
+            if (status !== 400) {
+              return { id: apiKey }
+            }
+          } catch (err) {
+            const error = err as AxiosError
+            console.error(
+              "# error while signing user: ",
+              error.code,
+              error.response?.data
+            )
+            return null
           }
         }
         return null
