@@ -1,5 +1,6 @@
 import { initTRPC, inferAsyncReturnType } from "@trpc/server"
 import type { CreateNextContextOptions } from "@trpc/server/adapters/next"
+import superjson from "superjson"
 
 /**
  * Method for creating tRPC context
@@ -12,4 +13,6 @@ export async function createContext(opts?: CreateNextContextOptions) {
 
 type Context = inferAsyncReturnType<typeof createContext>
 
-export const trpc = initTRPC.context<Context>().create()
+export const trpc = initTRPC.context<Context>().create({
+  transformer: superjson,
+})
