@@ -12,7 +12,7 @@ const MonthView: NextPage = () => {
   const { data } = trpc.rescueTimeRoute.data.useQuery({ from, to: now })
 
   return (
-    <main className="max-w-md  m-auto px-8 py-16 flex flex-col flex-1 gap-8">
+    <main className="m-auto px-8 py-16 flex flex-col flex-1 gap-8">
       <Head>
         <title>RescueTime Dashboard</title>
       </Head>
