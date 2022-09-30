@@ -3,19 +3,6 @@ import { TRPCError } from "@trpc/server"
 import { z } from "zod"
 import axios from "axios"
 
-const ProductivitySchema = z.object({
-  text: z.string(),
-  value: z.number(),
-})
-
-const ProductivityResponseSchema = z.object({
-  veryProductive: ProductivitySchema.nullish(),
-  productive: ProductivitySchema.nullish(),
-  neutral: ProductivitySchema.nullish(),
-  distracting: ProductivitySchema.nullish(),
-  veryDistracting: ProductivitySchema.nullish(),
-})
-
 function getISODate(date: Date | string) {
   if (typeof date === "string") {
     return date.split("T")[0]
