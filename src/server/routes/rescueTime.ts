@@ -16,16 +16,19 @@ const ProductivityResponseSchema = z.object({
   veryDistracting: ProductivitySchema.nullish(),
 })
 
-function getISODate(date: string) {
-  return date.split("T")[0]
+function getISODate(date: Date | string) {
+  if (typeof date === "string") {
+    return date.split("T")[0]
+  }
+  return date.toISOString().split("T")[0]
 }
 
 const router = trpc.router({
   data: trpc.procedure
     .input(
       z.object({
-        from: z.string(),
-        to: z.optional(z.string()),
+        from: z.date(),
+        to: z.optional(z.date()),
       })
     )
     .query(async ({ input, ctx }) => {
@@ -39,28 +42,51 @@ const router = trpc.router({
       console.debug("from = %s, to = %s", from, to)
 
       try {
-        const response: any = await axios.get(
-          "https://www.rescuetime.com/anapi/data",
-          {
-            params: {
-              key: ctx.session.id,
-              format: "json",
-              by: "rank",
-              interval: "day",
-              restrict_begin: getISODate(from),
-              restrict_end: getISODate(to),
-              restrict_kind: "productivity",
+        const { data } = await axios.get<{
+          notes: string
+          row_headers: string[]
+          rows: Array<[string, number, number, number]>
+        }>("https://www.rescuetime.com/anapi/data", {
+          params: {
+            key: ctx.session.id,
+            format: "json",
+            by: "interval",
+            interval: "day",
+            restrict_kind: "productivity",
+            restrict_begin: getISODate(from),
+            restrict_end: getISODate(to),
+          },
+        })
+        const dates: Record<
+          string,
+          { date: string; ranks: Record<number, number> }
+        > = {}
+
+        data.rows.forEach(row => {
+          const date = getISODate(row[AnalyticDataIndexes.DATE])
+          dates[date] = {
+            date,
+            ranks: {
+              ...dates[date]?.ranks,
+              [row[AnalyticDataIndexes.PRODUCTIVITY]]:
+                row[AnalyticDataIndexes.TIME_SPENT],
             },
           }
-        )
+        })
 
-        console.debug("> response: ", response)
-        return response.data
+        return dates
       } catch (err) {
         console.error("# error: ", err)
-        return err
+        return
       }
     }),
 })
+
+enum AnalyticDataIndexes {
+  DATE = 0,
+  TIME_SPENT = 1,
+  NUMBER_OF_PEOPLE = 2,
+  PRODUCTIVITY = 3,
+}
 
 export default router
