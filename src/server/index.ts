@@ -1,6 +1,8 @@
 import { initTRPC, inferAsyncReturnType } from "@trpc/server"
 import type { CreateNextContextOptions } from "@trpc/server/adapters/next"
 import superjson from "superjson"
+import { unstable_getServerSession } from "next-auth"
+import { authOptions } from "@pages/api/auth/[...nextauth]"
 
 /**
  * Method for creating tRPC context
@@ -8,7 +10,11 @@ import superjson from "superjson"
  * @param opts
  */
 export async function createContext(opts?: CreateNextContextOptions) {
-  return {}
+  const req = opts?.req
+  const res = opts?.res
+  const session =
+    req && res && (await unstable_getServerSession(req, res, authOptions))
+  return { req, res, session }
 }
 
 type Context = inferAsyncReturnType<typeof createContext>
