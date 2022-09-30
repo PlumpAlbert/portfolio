@@ -6,6 +6,25 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/auth/sign-in",
   },
+  session: {
+    strategy: "jwt",
+  },
+  callbacks: {
+    session: async ({ session, token }) => {
+      if (token) {
+        session.id = token.id
+      }
+      return session
+    },
+    jwt: async ({ token, user }) => {
+      if (user) {
+        token.id = user.id
+        token.email = user.email
+      }
+
+      return token
+    },
+  },
   providers: [
     Credentials({
       name: "API key",
