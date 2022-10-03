@@ -26,8 +26,6 @@ const router = trpc.router({
         })
       }
       const { from, to = from } = input
-      console.debug("from = %s, to = %s", from, to)
-
       try {
         const { data } = await axios.get<{
           notes: string
