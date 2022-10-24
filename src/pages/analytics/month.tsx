@@ -4,7 +4,7 @@ import { format, addMonths, lastDayOfMonth, isSameMonth } from "date-fns"
 import { trpc } from "@common/utils/trpc"
 import { useCallback, useMemo, useState } from "react"
 
-import DataTable from "./components/DataTable"
+import DataTable from "@features/analytics/month/components/DataTable"
 
 const MonthView: NextPage = () => {
   const [currentMonth, setMonth] = useState(lastDayOfMonth(new Date()))
