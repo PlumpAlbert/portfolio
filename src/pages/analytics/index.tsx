@@ -1,14 +1,25 @@
 import type { NextPage } from "next"
 import Head from "next/head"
-import { signIn } from "next-auth/react"
+import { signIn,useSession  } from "next-auth/react"
+import { useEffect } from "react"
+import { useRouter } from "next/router"
 
 const Home: NextPage = () => {
+  const { status } = useSession()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.replace("/analytics/month")
+    }
+  }, [status, router])
+
   return (
     <main className="max-w-md  m-auto px-8 py-16 flex flex-col flex-1 gap-8">
       <Head>
         <title>RescueTime Dashboard</title>
       </Head>
-      
+
       <h1 className="text-6xl font-black leading-tight text-center">
         Welcome to <br />
         <a
