@@ -1,5 +1,6 @@
 import { useMemo } from "react"
 import { intervalToDuration, format } from "date-fns"
+import { ProductivityRank } from "src/types"
 
 function formatTime(seconds: number) {
   const duration = intervalToDuration({ start: 0, end: seconds * 1000 })
@@ -100,12 +101,4 @@ interface IProps {
     | Record<string, { date: string; ranks: Record<number, number> }>
     | undefined
   isLoading: boolean
-}
-
-enum ProductivityRank {
-  VERY_PRODUCTIVE = 2,
-  PRODUCTIVE = 1,
-  NEUTRAL = 0,
-  DISTRACTING = -1,
-  VERY_DISTRACTING = -2,
 }
