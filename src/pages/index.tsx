@@ -77,7 +77,7 @@ const IndexView: NextPage = () => {
           Projects
         </h2>
         <div className="w-full flex gap-6">
-          <Link href="/analytics" className="px-6 py-3 text-center bg-blue-600 text-white rounded">
+          <Link href="/dashboard" className="px-6 py-3 text-center bg-blue-600 text-white rounded">
             RescueTime dashboard
           </Link>
         </div>

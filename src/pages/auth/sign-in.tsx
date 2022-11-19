@@ -10,7 +10,7 @@ const SignIn: NextPage = () => {
 
   useEffect(() => {
     if (status === "authenticated") {
-      router.replace("/analytics/month")
+      router.replace("/dashboard/month")
     }
   }, [router, status])
 
@@ -21,7 +21,7 @@ const SignIn: NextPage = () => {
       signIn("credentials", {
         apiKey,
         redirect: true,
-        callbackUrl: "/analytics/month",
+        callbackUrl: "/dashboard/month",
       })
     },
     []

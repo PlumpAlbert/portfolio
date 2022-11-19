@@ -10,7 +10,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (status === "authenticated") {
-      router.replace("/analytics/month")
+      router.replace("/dashboard/month")
     }
   }, [status, router])
 
