@@ -1,6 +1,7 @@
 import type { NextPage } from "next"
 import Head from "next/head"
 import Image from "next/image"
+import Link from "next/link"
 
 const IndexView: NextPage = () => {
   return (
@@ -69,6 +70,16 @@ const IndexView: NextPage = () => {
             <Image width={32} height={32} src="/assets/mail.svg" alt="Mail" />
             <h6> Email </h6>
           </a>
+        </div>
+      </section>
+      <section className="px-5 w-full flex flex-col gap-4 mb-6">
+        <h2 className="text-2xl text-center text-white font-header uppercase">
+          Projects
+        </h2>
+        <div className="w-full flex gap-6">
+          <Link href="/analytics" className="px-6 py-3 text-center bg-blue-600 text-white rounded">
+            RescueTime dashboard
+          </Link>
         </div>
       </section>
     </main>
