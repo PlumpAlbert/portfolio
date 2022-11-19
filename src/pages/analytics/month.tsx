@@ -39,7 +39,7 @@ const MonthView: NextPage = () => {
   )
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-16 flex flex-col flex-1 gap-8">
+    <main className="max-w-6xl mx-auto px-4 py-8 flex flex-col flex-1 gap-8">
       <Head>
         <title>RescueTime Dashboard</title>
       </Head>

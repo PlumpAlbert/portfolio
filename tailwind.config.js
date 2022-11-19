@@ -11,11 +11,26 @@ module.exports = {
           dark: "hsl(220, 10%, 12%)",
         },
         productivity: {
-          2: "#8EABE6",
-          1: "#87EEBB",
-          0: "#D9D9D9",
-          ["-1"]: "#E9E463",
-          ["-2"]: "#FF8766",
+          VP: {
+            dark: "#8EABE6",
+            light: "#2654AE",
+          },
+          P: {
+            dark: "#87EEBB",
+            light: "#1BBA6A",
+          },
+          N: {
+            dark: "#D9D9D9",
+            light: "#7C7C7C",
+          },
+          D: {
+            dark: "#E9E463",
+            light: "#E88761",
+          },
+          VD: {
+            dark: "#FF8766",
+            light: "#FF3700",
+          },
         },
         modal: {
           dark: "hsl(223, 15%, 15%)",
