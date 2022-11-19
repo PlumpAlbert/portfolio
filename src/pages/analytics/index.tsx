@@ -1,6 +1,6 @@
 import type { NextPage } from "next"
 import Head from "next/head"
-import { signIn,useSession  } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 import { useEffect } from "react"
 import { useRouter } from "next/router"
 
@@ -32,7 +32,12 @@ const Home: NextPage = () => {
         Dashboard
       </h1>
 
-      <button className="button w-full" onClick={() => signIn()}>
+      <button
+        className="text-xl button w-full"
+        onClick={() => {
+          signIn()
+        }}
+      >
         Sign In
       </button>
     </main>

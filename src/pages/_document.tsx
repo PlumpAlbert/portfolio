@@ -20,12 +20,12 @@ export default function Document() {
       <body className="flex flex-col">
         <Main />
 
-        <footer className="w-full px-5 flex flex-col flex-1 gap-3 py-5 border-t border-t-neutral-200 text-sm dark:border-t-gray-600">
+        <footer className="w-full mt-auto px-5 py-5 flex flex-col flex-1 gap-4 border-t border-t-neutral-200 text-sm dark:border-t-gray-600">
           <p className="text-justify">
             Copyright &copy; {new Date().getFullYear()} Plump Albert
           </p>
           <a
-            className="w-fit flex flex-1 items-center"
+            className="self-center w-fit flex flex-1 items-center"
             href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
             target="_blank"
             rel="noopener noreferrer"

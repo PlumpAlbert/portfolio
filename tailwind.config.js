@@ -7,8 +7,8 @@ module.exports = {
     extend: {
       colors: {
         background: {
-          light: "#E6E6E6",
-          dark: "#1E1E1E",
+          light: "hsl(0, 0%, 94%)",
+          dark: "hsl(220, 10%, 12%)",
         },
         productivity: {
           2: "#8EABE6",
@@ -16,6 +16,10 @@ module.exports = {
           0: "#D9D9D9",
           ["-1"]: "#E9E463",
           ["-2"]: "#FF8766",
+        },
+        modal: {
+          dark: "hsl(223, 15%, 15%)",
+          light: "#ffffff",
         },
       },
       fontFamily: {

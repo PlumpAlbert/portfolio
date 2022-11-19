@@ -13,6 +13,8 @@ div#__next {
   @apply font-sans;
 }
 body {
+  width: 100vw;
+  height: 100vh;
   @apply bg-background-light text-neutral-900;
 }
 
@@ -26,13 +28,12 @@ a {
 }
 
 .input {
-  @apply px-3 py-1 rounded-md leading-normal bg-neutral-200 text-neutral-900
+  @apply px-3 py-2 rounded-md leading-normal bg-neutral-200 text-neutral-900
   dark:bg-gray-700 dark:text-white/90;
 }
 
 .button {
-  @apply font-medium rounded text-sm px-4 py-2 text-center
-  text-white bg-blue-600
+  @apply font-medium rounded px-4 py-2 text-center text-white bg-blue-600
   focus:ring-4 focus:outline-none focus:ring-blue-300
   hover:bg-blue-700
   dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
