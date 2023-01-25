@@ -16,8 +16,8 @@ const Page: NextPage = () => {
         <div className="self-center w-1/2">
           <Image
             className="rounded-md"
-            alt="valentine.jpg"
-            src="/assets/valentine.jpg"
+            alt="valentine.png"
+            src="/assets/valentine.png"
             width={999999}
             height={999999}
             quality="100"
