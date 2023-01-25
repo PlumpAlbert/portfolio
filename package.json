@@ -13,6 +13,7 @@
     "@trpc/client": "^10.0.0-proxy-beta.9",
     "@trpc/next": "^10.0.0-proxy-beta.9",
     "@trpc/react": "^10.0.0-proxy-beta.9",
+    "@trpc/react-query": "^10.9.0",
     "@trpc/server": "^10.0.0-proxy-beta.9",
     "axios": "^0.27.2",
     "date-fns": "^2.29.3",
