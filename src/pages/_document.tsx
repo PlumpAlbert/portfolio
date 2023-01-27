@@ -1,4 +1,4 @@
-import { Head, Main, Html, NextScript } from "next/document"
+import {Head, Main, Html, NextScript} from "next/document";
 
 export default function Document() {
   return (
@@ -13,7 +13,7 @@ export default function Document() {
           crossOrigin=""
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0&display=swap&family=Kaushan+Script"
           rel="stylesheet"
         />
       </Head>
@@ -46,5 +46,5 @@ export default function Document() {
         <NextScript />
       </body>
     </Html>
-  )
+  );
 }
