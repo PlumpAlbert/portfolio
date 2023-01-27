@@ -1,6 +1,6 @@
-import NextAuth, { type NextAuthOptions } from "next-auth"
-import Credentials from "next-auth/providers/credentials"
-import axios, { AxiosError } from "axios"
+import NextAuth, {type NextAuthOptions} from "next-auth";
+import Credentials from "next-auth/providers/credentials";
+import axios, {AxiosError} from "axios";
 
 export const authOptions: NextAuthOptions = {
   pages: {
@@ -10,19 +10,16 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    session: async ({ session, token }) => {
-      if (token) {
-        session.id = token.id
-      }
-      return session
+    session: async ({session, token}) => {
+      return {...session, id: token?.id};
     },
-    jwt: async ({ token, user }) => {
+    jwt: async ({token, user}) => {
       if (user) {
-        token.id = user.id
-        token.email = user.email
+        token.id = user.id;
+        token.email = user.email;
       }
 
-      return token
+      return token;
     },
   },
   providers: [
@@ -38,29 +35,29 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         if (credentials?.apiKey) {
           // Make an API call to RescueTime to check if key is valid
-          const { apiKey } = credentials
+          const {apiKey} = credentials;
           try {
-            const { status } = await axios.get(
+            const {status} = await axios.get(
               "https://www.rescuetime.com/anapi/daily_summary_feed",
-              { params: { key: apiKey } }
-            )
-            console.debug("> sign in status: ", status)
+              {params: {key: apiKey}}
+            );
+            console.debug("> sign in status: ", status);
             if (status !== 400) {
-              return { id: apiKey }
+              return {id: apiKey};
             }
           } catch (err) {
-            const error = err as AxiosError
+            const error = err as AxiosError;
             console.error(
               "# error while signing user: ",
               error.code,
               error.response?.data
-            )
-            return null
+            );
+            return null;
           }
         }
-        return null
+        return null;
       },
     }),
   ],
-}
-export default NextAuth(authOptions)
+};
+export default NextAuth(authOptions);

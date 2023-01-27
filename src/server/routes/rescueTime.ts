@@ -26,7 +26,7 @@ const router = trpc.router({
         rows: Array<[string, number, number, number]>
       }>("https://www.rescuetime.com/anapi/data", {
         params: {
-          key: ctx.session.id,
+          key: (ctx.session as any).id,
           format: "json",
           by: "interval",
           interval: "day",
@@ -79,7 +79,7 @@ const router = trpc.router({
           rows: Array<[string, number, number, number]>
         }>("https://www.rescuetime.com/anapi/data", {
           params: {
-            key: ctx.session.id,
+            key: (ctx.session as any).id,
             format: "json",
             by: "interval",
             interval: "day",
