@@ -1,0 +1,97 @@
+@import "/styles/colors.scss";
+@import "/styles/mixins.scss";
+
+.root {
+	flex: 1;
+	padding: 1.25rem 1rem;
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+
+	.avatar {
+		flex: 0 1 256px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+
+		&_image {
+			width: 256px;
+			height: 256px;
+			border-radius: 35% 35% 35% 35%;
+			border: 1px solid $light-gray;
+
+			@include dark {
+				border-color: $light-gray-dark;
+			}
+		}
+
+		&_title {
+			text-transform: uppercase;
+			font-family: var(--font-heading);
+			font-size: 1.75rem;
+			line-height: 2.5rem;
+			text-align: center;
+		}
+
+		.socials {
+			$radius: 12px;
+			display: flex;
+			flex-direction: row;
+			gap: 0.75rem;
+
+			.telegram {
+				background: #229ed9;
+				border-radius: $radius;
+				padding: 0.5rem;
+			}
+			.github,
+			.gmail {
+				background: transparent;
+				padding: 0.5rem;
+				border-radius: $radius;
+				border: 1px solid $light-gray;
+
+				@include dark {
+					background: $light-gray-dark;
+					border: 1px solid $light-gray-dark;
+				}
+			}
+		}
+	}
+
+	.content {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+
+		.block {
+			display: flex;
+			flex-direction: column;
+			margin: 0;
+			line-height: 1.5;
+			text-align: justify;
+			gap: 0.5rem;
+
+			&__header {
+				text-align: center;
+				text-transform: uppercase;
+				font-size: 1.375rem;
+				font-family: var(--font-heading);
+			}
+		}
+	}
+
+	@include for-desktop {
+		flex-direction: row;
+
+		.content {
+			.block {
+				&__header {
+					text-align: left;
+				}
+			}
+		}
+	}
+}

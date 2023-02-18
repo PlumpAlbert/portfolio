@@ -1,5 +1,6 @@
 @import "./icons.css";
 @import "./colors.scss";
+@import "./mixins.scss";
 
 :root {
 	--foreground: #{$foreground};
@@ -14,17 +15,25 @@
 }
 
 html,
-body {
-	max-width: 100vw;
+body,
+div#__next {
+	margin: 0 auto;
+	max-width: 1024px;
 	height: 100%;
 	overflow-x: hidden;
 	font-family: var(--font-sans);
 }
 
 body {
-	color: rgb(var(--foreground-rgb));
+	color: var(--foreground);
 	background: linear-gradient(to bottom, transparent, var(--background-end))
 		var(--background-start);
+}
+
+div#__next {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 }
 
 a {
@@ -32,7 +41,7 @@ a {
 	text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
+@include dark {
 	:root {
 		--foreground: #{$foreground-dark};
 		--background-start: #{$background-start-dark};
