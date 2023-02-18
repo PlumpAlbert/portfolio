@@ -8,7 +8,7 @@ const RequestParamsSchema = z.object({
 	date: z.string().datetime({ offset: true }),
 })
 
-type Productivity = {
+export type Productivity = {
 	veryProductive?: number
 	productive?: number
 	neutral?: number
@@ -16,26 +16,10 @@ type Productivity = {
 	veryDistracting?: number
 }
 
-const handler: NextApiHandler = async (req, res) => {
-	if (req.method !== "GET") {
-		return res.status(405).json({
-			error: true,
-			message: "Method is not allowed",
-		})
-	}
-
-	const result = RequestParamsSchema.safeParse(req.query)
-	if (!result.success) {
-		return res.status(400).json({
-			error: true,
-			message: formatError(result.error),
-		})
-	}
-	const date = parseISO(result.data.date)
-
+export const getData = async (month: Date) => {
 	const params = {
-		restrict_begin: startOfMonth(date),
-		restrict_end: endOfMonth(date),
+		restrict_begin: startOfMonth(month),
+		restrict_end: endOfMonth(month),
 		format: "csv",
 		by: "interval",
 		interval: "day",
@@ -49,7 +33,7 @@ const handler: NextApiHandler = async (req, res) => {
 	)
 
 	if (status !== 200) {
-		return res.status(400).json(data)
+		throw data
 	}
 
 	const ranks: Record<string, Productivity> = {}
@@ -92,9 +76,29 @@ const handler: NextApiHandler = async (req, res) => {
 			}
 		})
 
+	return ranks
+}
+
+const handler: NextApiHandler = async (req, res) => {
+	if (req.method !== "GET") {
+		return res.status(405).json({
+			error: true,
+			message: "Method is not allowed",
+		})
+	}
+
+	const result = RequestParamsSchema.safeParse(req.query)
+	if (!result.success) {
+		return res.status(400).json({
+			error: true,
+			message: formatError(result.error),
+		})
+	}
+	const date = parseISO(result.data.date)
+
 	return res.status(200).json({
 		error: false,
-		data: ranks,
+		data: await getData(date),
 	})
 }
 
