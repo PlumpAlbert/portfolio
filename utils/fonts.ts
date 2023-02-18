@@ -1,7 +1,7 @@
-import { Roboto_Flex, JetBrains_Mono } from "@next/font/google"
+import { Inter, Nunito, JetBrains_Mono } from "@next/font/google"
 
-export const body = Roboto_Flex({ variable: "--roboto-flex" })
+export const body = Inter()
 
-export const heading = Roboto_Flex({ variable: "--roboto-flex" })
+export const heading = Nunito()
 
-export const mono = JetBrains_Mono({ variable: "--jetbrains-mono" })
+export const mono = JetBrains_Mono()
