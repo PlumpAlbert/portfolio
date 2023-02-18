@@ -3,21 +3,27 @@
 .header {
 	display: flex;
 	align-items: center;
-    padding: 1.25rem 1rem 1rem;
-    gap: 1rem;
+	padding: 1.25rem 1rem 1rem;
+	gap: 1rem;
 
 	.header-title {
-		font-family: var(--font-mono);
-		font-size: 2rem;
-        line-height: 2.5rem;
-        text-transform: uppercase;
+		display: none;
+		font-family: var(--font-heading);
+		font-weight: 500;
+		font-size: 1.875rem;
+		line-height: 2.5rem;
+		text-transform: uppercase;
 	}
 
 	.icon {
-		&.logo {
-		}
 		&.menu {
 			margin-left: auto;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.header-title {
+			display: block;
 		}
 	}
 }
