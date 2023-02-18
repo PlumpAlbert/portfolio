@@ -1,0 +1,23 @@
+@import "/styles/colors.scss";
+
+.header {
+	display: flex;
+	align-items: center;
+    padding: 1.25rem 1rem 1rem;
+    gap: 1rem;
+
+	.header-title {
+		font-family: var(--font-mono);
+		font-size: 2rem;
+        line-height: 2.5rem;
+        text-transform: uppercase;
+	}
+
+	.icon {
+		&.logo {
+		}
+		&.menu {
+			margin-left: auto;
+		}
+	}
+}
