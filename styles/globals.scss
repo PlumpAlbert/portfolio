@@ -1,4 +1,11 @@
+@import "./icons.css";
 @import "./colors.scss";
+
+:root {
+	--foreground: #{$foreground};
+	--background-start: #{$background-start};
+	--background-end: #{$background-end};
+}
 
 * {
 	box-sizing: border-box;
@@ -23,4 +30,16 @@ body {
 a {
 	color: inherit;
 	text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--foreground: #{$foreground-dark};
+		--background-start: #{$background-start-dark};
+		--background-end: #{$background-end-dark};
+	}
+
+	html {
+		color-scheme: dark;
+	}
 }
