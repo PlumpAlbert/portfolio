@@ -1,0 +1,25 @@
+$foreground: hsl(0, 0%, 10%);
+$background-start: hsl(200, 12%, 90%);
+$background-end: hsl(205, 8%, 100%);
+
+:root {
+	--foreground: #{$foreground};
+	--background-start: #{$background-start};
+	--background-end: #{$background-end};
+}
+
+@media (prefers-color-scheme: dark) {
+	$foreground: hsl(200, 23%, 97%);
+	$background-start: hsl(200, 4%, 10%);
+	$background-end: hsl(200, 8%, 8%);
+
+	:root {
+		--foreground: #{$foreground};
+		--background-start: #{$background-start};
+		--background-end: #{$background-end};
+	}
+
+	html {
+		color-scheme: dark;
+	}
+}

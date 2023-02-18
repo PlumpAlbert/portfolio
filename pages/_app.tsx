@@ -1,4 +1,4 @@
-import "@/styles/globals.css"
+import "@/styles/globals.scss"
 import { body, heading, mono } from "@/utils/fonts"
 import type { AppProps } from "next/app"
 import { NextPageWithLayout } from "@/types"
@@ -32,7 +32,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 				h5,
 				h6 {
 					font-family: var(--font-heading);
-                    font-weight: 500;
+					font-weight: 500;
 				}
 
 				.sans {
