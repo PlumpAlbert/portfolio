@@ -1,8 +1,10 @@
+import { useCallback } from "react"
 import type { GetServerSideProps } from "next"
 import Head from "next/head"
 import Image from "next/image"
+import { intervalToDuration, formatDuration } from "date-fns"
 // chart
-import { Chart, ArcElement, Tooltip, Legend } from "chart.js"
+import { Chart, ArcElement, Tooltip, Legend, TooltipItem } from "chart.js"
 import { Doughnut } from "react-chartjs-2"
 // page
 import { NextPageWithLayout } from "@/types"
@@ -31,6 +33,22 @@ const Home: NextPageWithLayout = (data: Record<string, Productivity>) => {
 		chartData[3] += day.distracting
 		chartData[4] += day.veryDistracting
 	})
+
+	const chartLabel = useCallback<(ctx: TooltipItem<"doughnut">) => string>(
+		({ parsed, dataset }) => {
+			const label = dataset.label || ""
+			const duration = intervalToDuration({
+				start: 0,
+				end: parsed * 1000,
+			})
+			return `${label}: ${formatDuration(duration, {
+				format: ["hours", "minutes"],
+				zero: false,
+			})}`
+		},
+		[]
+	)
+
 	return (
 		<>
 			<Head>
@@ -108,62 +126,82 @@ const Home: NextPageWithLayout = (data: Record<string, Productivity>) => {
 						<h6 className={SC({ block__header: true })}>
 							Statistics
 						</h6>
-						<div style={{ position: "relative", width: "100%" }}>
-							<Doughnut
-								className={SC({ chart: true })}
-								redraw
-								width="100%"
-								height={320}
-								options={{
-									font: { family: body.style.fontFamily },
-									maintainAspectRatio: false,
-									responsive: true,
-									normalized: true,
-									plugins: {
-										legend: {
-											position: "right",
-											labels: {
-												font: {
-													weight: "400",
-													family: body.style
-														.fontFamily,
+						<div className={SC({ chart: true })}>
+							<p className={SC({ "chart-text": true })}>
+								<Link
+									href="https://rescuetime.com"
+									target="_blank"
+									className={SC({ link: true })}
+								>
+									RescueTime
+								</Link>
+								<br />
+								Total amount of time spent on work during this
+								month.
+							</p>
+							<div className={SC({ "chart-wrapper": true })}>
+								<Doughnut
+									className={SC({ chart: true })}
+									redraw
+									width="100%"
+									height={320}
+									options={{
+										font: { family: body.style.fontFamily },
+										maintainAspectRatio: false,
+										responsive: true,
+										normalized: true,
+										plugins: {
+											legend: {
+												position: "right",
+												labels: {
+													font: {
+														weight: "400",
+														family: body.style
+															.fontFamily,
+													},
+													color: "hsl(200, 4%, 44%)",
+													boxWidth: 24,
+													borderRadius: 4,
+													boxHeight: 12,
+													padding: 16,
 												},
-												boxWidth: 24,
-												borderRadius: 4,
-												boxHeight: 12,
-												padding: 16,
+											},
+											tooltip: {
+												callbacks: {
+													label: chartLabel,
+												},
 											},
 										},
-									},
-								}}
-								data={{
-									labels: [
-										"Very productive",
-										"Productive",
-										"Neutral",
-										"Distracting",
-										"Very distracting",
-									],
-									datasets: [
-										{
-											normalized: true,
-											spacing: 2,
-											label: "# of seconds",
-											backgroundColor: [
-												"#8EABE6",
-												"#87EEBB",
-												"#D9D9D9",
-												"#E9E463",
-												"#FF8766",
-											],
-											borderJoinStyle: "round",
-											borderRadius: 4,
-											borderWidth: 0,
-											data: chartData,
-										},
-									],
-								}}
-							/>
+									}}
+									data={{
+										labels: [
+											"Very productive",
+											"Productive",
+											"Neutral",
+											"Distracting",
+											"Very distracting",
+										],
+										datasets: [
+											{
+												normalized: true,
+												spacing: 2,
+												label: "Time spent",
+												backgroundColor: [
+													"#8EABE6",
+													"#87EEBB",
+													"#D9D9D9",
+													"#E9E463",
+													"#FF8766",
+												],
+												borderJoinStyle: "round",
+												borderRadius: 4,
+												borderWidth: 0,
+												data: chartData,
+											},
+										],
+									}}
+								/>
+							</div>
 						</div>
 					</div>
 				</section>
