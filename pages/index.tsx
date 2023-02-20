@@ -208,12 +208,16 @@ export const getServerSideProps: GetServerSideProps<{
 }> = async ({ res }) => {
 	res.setHeader(
 		"Cache-Control",
-		"public,s-maxage=10,stale-while-revalidate=59"
+		"public,s-maxage=86400,stale-while-revalidate=59"
 	)
 	const data = await getData(new Date())
-	const chartData: [number, number, number, number, number] = new Array(
-		5
-	).fill(0)
+	const chartData = new Array(5).fill(0) as [
+		number,
+		number,
+		number,
+		number,
+		number
+	]
 	Object.values(data).forEach(day => {
 		chartData[0] += day.veryProductive
 		chartData[1] += day.productive
