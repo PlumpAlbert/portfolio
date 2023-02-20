@@ -1,0 +1,47 @@
+@import "/styles/mixins.scss";
+
+.root {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: 0.5rem;
+
+	@include for-desktop {
+		flex-direction: row;
+		gap: 4rem;
+	}
+
+	.image-wrapper {
+		position: relative;
+		min-width: 172px;
+		min-height: 172px;
+		aspect-ratio: 1/1;
+
+		.image {
+			object-fit: contain;
+		}
+	}
+
+	.text {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		text-align: center;
+
+		@include for-desktop {
+			text-align: left;
+		}
+
+		&__header {
+			font-size: 2rem;
+			font-family: var(--font-heading);
+			line-height: 1.5;
+		}
+
+		&__content {
+			line-height: 1.5;
+		}
+	}
+}
