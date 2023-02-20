@@ -9,7 +9,7 @@ const Footer = () => (
 		<span className={body.className}>
 			&copy; {new Date().getFullYear()} Plump Albert
 		</span>
-		<code>Powered by Vercel</code>
+		<span>Powered by Vercel</span>
 	</footer>
 )
 
