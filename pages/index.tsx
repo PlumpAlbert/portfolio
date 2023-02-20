@@ -1,5 +1,5 @@
 import { useCallback } from "react"
-import type { GetServerSideProps } from "next"
+import type { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import Head from "next/head"
 import Image from "next/image"
 import { intervalToDuration, formatDuration } from "date-fns"
@@ -24,16 +24,9 @@ const SC = sassBuilder(styles)
 
 Chart.register(ArcElement, Tooltip, Legend)
 
-const Home: NextPageWithLayout = (data: Record<string, Productivity>) => {
-	const chartData = new Array(5).fill(0)
-	Object.values(data).forEach(day => {
-		chartData[0] += day.veryProductive
-		chartData[1] += day.productive
-		chartData[2] += day.neutral
-		chartData[3] += day.distracting
-		chartData[4] += day.veryDistracting
-	})
-
+const Home: NextPageWithLayout<
+	InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ chartData }) => {
 	const chartLabel = useCallback<(ctx: TooltipItem<"doughnut">) => string>(
 		({ parsed, dataset }) => {
 			const label = dataset.label || ""
@@ -210,12 +203,25 @@ const Home: NextPageWithLayout = (data: Record<string, Productivity>) => {
 	)
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+export const getServerSideProps: GetServerSideProps<{
+	chartData: [number, number, number, number, number]
+}> = async ({ res }) => {
 	res.setHeader(
 		"Cache-Control",
 		"public,s-maxage=10,stale-while-revalidate=59"
 	)
-	return { props: await getData(new Date()) }
+	const data = await getData(new Date())
+	const chartData: [number, number, number, number, number] = new Array(
+		5
+	).fill(0)
+	Object.values(data).forEach(day => {
+		chartData[0] += day.veryProductive
+		chartData[1] += day.productive
+		chartData[2] += day.neutral
+		chartData[3] += day.distracting
+		chartData[4] += day.veryDistracting
+	})
+	return { props: { chartData } }
 }
 
 Home.getLayout = MainLayout
