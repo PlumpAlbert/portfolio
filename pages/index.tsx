@@ -52,6 +52,7 @@ const Home: NextPage<
 						className={SC({ avatar_image: true })}
 						height={256}
 						width={256}
+						quality={100}
 						alt="avatar"
 						src="/avatar.jpg"
 					/>
