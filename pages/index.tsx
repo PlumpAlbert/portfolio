@@ -100,20 +100,40 @@ const Home: NextPageWithLayout<
 						<h6 className={SC({ block__header: true })}>
 							About me
 						</h6>
-						Lorem ipsum dolor sit amet, officia excepteur ex fugiat
-						reprehenderit enim labore culpa sint ad nisi Lorem
-						pariatur mollit ex esse exercitation amet. Nisi anim
-						cupidatat excepteur officia. Reprehenderit nostrud
-						nostrud ipsum Lorem est aliquip amet voluptate voluptate
-						dolor minim nulla est proident. Nostrud officia pariatur
-						ut officia. Sit irure elit esse ea nulla sunt ex
-						occaecat reprehenderit commodo officia dolor Lorem duis
-						laboris cupidatat officia voluptate. Culpa proident
-						adipisicing id nulla nisi laboris ex in Lorem sunt duis
-						officia eiusmod. Aliqua reprehenderit commodo ex non
-						excepteur duis sunt velit enim. Voluptate laboris sint
-						cupidatat ullamco ut ea consectetur et est culpa et
-						culpa duis.
+						<div className={SC({ about: true })}>
+							Hello! My name is Matthew. I am a web-developer. I
+							have a bachelor degree in computer science, 2 years
+							of enterprise expirience in React development.
+							<br />
+							<br />I have a great knowledge of:
+							<ul className={SC({ list: true })}>
+								<li className={SC({ item: true })}>
+									ECMAScript 6+
+								</li>
+								<li className={SC({ item: true })}>
+									TypeScript
+								</li>
+								<li className={SC({ item: true })}>
+									CSS, Sass, Scss
+								</li>
+								<li className={SC({ item: true })}>HTML</li>
+								<li className={SC({ item: true })}>Linux</li>
+								<li className={SC({ item: true })}>
+									shell (bash, zsh)
+								</li>
+							</ul>
+							<br />I also worked with:
+							<ul className={SC({ list: true })}>
+								<li className={SC({ item: true })}>Docker</li>
+								<li className={SC({ item: true })}>
+									Github Actions
+								</li>
+								<li className={SC({ item: true })}>PHP</li>
+								<li className={SC({ item: true })}>Python</li>
+							</ul>
+							<br />I can describe myself as hardworking, diligent
+							and dutiful.
+						</div>
 					</div>
 					<div className={SC({ block: true })}>
 						<h6 className={SC({ block__header: true })}>

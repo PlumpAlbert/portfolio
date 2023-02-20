@@ -81,6 +81,34 @@
 				font-family: var(--font-heading);
 			}
 
+			.about {
+				display: flex;
+				flex-direction: column;
+				line-height: 1.5;
+
+				.list {
+					margin-top: 0.375em;
+					line-height: 1.75;
+
+					.item {
+						list-style: none;
+						display: flex;
+						align-items: center;
+						gap: 0.5em;
+
+						&::before {
+							$size: 6px;
+							display: inline-block;
+							content: " ";
+							width: $size;
+							height: $size;
+							border-radius: 50%;
+							background: #8eabe6;
+						}
+					}
+				}
+			}
+
 			.chart {
 				display: flex;
 				flex-direction: column;

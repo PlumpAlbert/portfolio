@@ -15,16 +15,14 @@
 }
 
 html,
-body,
-div#__next {
-	margin: 0 auto;
-	max-width: 1024px;
+body {
 	height: 100%;
 	overflow-x: hidden;
 	font-family: var(--font-sans);
 }
 
-body {
+body,
+div#__next {
 	color: var(--foreground);
 	background: linear-gradient(to bottom, transparent, var(--background-end))
 		var(--background-start);
@@ -33,7 +31,9 @@ body {
 div#__next {
 	display: flex;
 	flex-direction: column;
-	height: 100%;
+	min-height: 100%;
+	margin: 0 auto;
+	max-width: 1024px;
 }
 
 a {
