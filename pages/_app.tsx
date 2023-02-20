@@ -2,14 +2,15 @@ import "@/styles/globals.scss"
 import { body, heading, mono } from "@/utils/fonts"
 import type { AppProps } from "next/app"
 import { NextPageWithLayout } from "@/types"
+import MainLayout from "@/components/layouts/MainLayout"
 
 type AppPropsWithLayout = AppProps & { Component: NextPageWithLayout }
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
-	let child: any = <Component {...pageProps} />
-	if (typeof Component.getLayout === "function") {
-		child = Component.getLayout(<Component {...pageProps} />)
-	}
+	let child =
+		typeof Component.getLayout === "function"
+			? Component.getLayout(<Component {...pageProps} />)
+			: MainLayout(<Component {...pageProps} />)
 
 	return (
 		<>

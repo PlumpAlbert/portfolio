@@ -1,5 +1,9 @@
 import { useCallback } from "react"
-import type { GetServerSideProps, InferGetServerSidePropsType } from "next"
+import type {
+	GetServerSideProps,
+	InferGetServerSidePropsType,
+	NextPage,
+} from "next"
 import Head from "next/head"
 import Image from "next/image"
 import { intervalToDuration, formatDuration } from "date-fns"
@@ -7,14 +11,9 @@ import { intervalToDuration, formatDuration } from "date-fns"
 import { Chart, ArcElement, Tooltip, Legend, TooltipItem } from "chart.js"
 import { Doughnut } from "react-chartjs-2"
 // page
-import { NextPageWithLayout } from "@/types"
 import { body } from "@/utils/fonts"
-import MainLayout from "@/components/layouts/MainLayout"
 // api
-import {
-	type Productivity,
-	getData,
-} from "@/pages/api/analytics/rescuetime/month"
+import { getData } from "@/pages/api/analytics/rescuetime/month"
 // styles
 import { sassBuilder } from "@/utils/sass"
 import styles from "@/styles/pages/index.module.scss"
@@ -24,7 +23,7 @@ const SC = sassBuilder(styles)
 
 Chart.register(ArcElement, Tooltip, Legend)
 
-const Home: NextPageWithLayout<
+const Home: NextPage<
 	InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ chartData }) => {
 	const chartLabel = useCallback<(ctx: TooltipItem<"doughnut">) => string>(
@@ -247,7 +246,5 @@ export const getServerSideProps: GetServerSideProps<{
 	})
 	return { props: { chartData } }
 }
-
-Home.getLayout = MainLayout
 
 export default Home
