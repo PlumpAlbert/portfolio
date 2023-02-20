@@ -239,11 +239,11 @@ export const getServerSideProps: GetServerSideProps<{
 		number
 	]
 	Object.values(data).forEach(day => {
-		chartData[0] += day.veryProductive
-		chartData[1] += day.productive
-		chartData[2] += day.neutral
-		chartData[3] += day.distracting
-		chartData[4] += day.veryDistracting
+		chartData[0] += day.veryProductive ?? 0
+		chartData[1] += day.productive ?? 0
+		chartData[2] += day.neutral ?? 0
+		chartData[3] += day.distracting ?? 0
+		chartData[4] += day.veryDistracting ?? 0
 	})
 	return { props: { chartData } }
 }
