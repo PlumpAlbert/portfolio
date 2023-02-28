@@ -4,6 +4,9 @@ export const sass = (
 	...classNames: string[]
 ) => {
 	const classes = Object.keys(obj).map(key => {
+		if (!obj[key]) {
+			return ""
+		}
 		return styles[key] ?? ""
 	})
 
