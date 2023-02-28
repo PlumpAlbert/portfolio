@@ -1,10 +1,24 @@
 @import "/styles/colors.scss";
+@import "/styles/mixins.scss";
 
 .header {
+	position: relative;
 	display: flex;
-	align-items: center;
-	padding: 1.25rem 1rem 1rem;
-	gap: 1rem;
+	flex-direction: column;
+	padding-block: 1.25rem 1rem;
+
+	.text {
+		display: flex;
+		align-items: center;
+		padding-inline: 1rem;
+		gap: 1rem;
+
+		.home-link {
+			display: flex;
+			flex-direction: row;
+			gap: 1.5rem;
+		}
+	}
 
 	.header-title {
 		display: none;
@@ -13,17 +27,101 @@
 		font-size: 1.875rem;
 		line-height: 2.5rem;
 		text-transform: uppercase;
-	}
 
-	.icon {
-		&.menu {
-			margin-left: auto;
+		@include for-desktop {
+			display: block;
 		}
 	}
 
-	@media (min-width: 1024px) {
-		.header-title {
-			display: block;
+	.icon-button {
+		display: inline-flex;
+		margin-left: auto;
+		border-style: none;
+		padding: 0.5rem;
+		border-radius: 50%;
+		font-size: 1.5rem;
+		background: transparent;
+		color: inherit;
+
+		&:focus,
+		&:hover {
+			outline: 3px solid var(--gray-400);
+			background: transparent;
+		}
+
+		@include for-desktop {
+			display: none;
+		}
+	}
+
+	.menu-wrapper {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		background: var(--background-start);
+		border-radius: 4px;
+		align-items: stretch;
+		padding-block: 0.5rem;
+		transform: scaleY(1);
+		transform-origin: top right;
+		transition-property: transform, height;
+		transition-duration: 250ms;
+		transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+		position: absolute;
+		z-index: 999;
+		bottom: calc(-100% - 3px);
+		left: 0;
+		right: 0;
+
+		.menu-item {
+			padding: 0.5rem 2rem;
+			font-size: 1rem;
+			font-family: var(--font-heading);
+			text-align: center;
+			text-transform: uppercase;
+			user-select: none;
+
+			&:hover {
+				background: rgba($background-start, 0.2);
+			}
+			@include dark {
+				&:hover {
+					background: rgba($background-start-dark, 0.2);
+				}
+			}
+		}
+
+		&.hidden {
+			transform: scaleY(0);
+		}
+	}
+
+	@include for-desktop {
+		flex-direction: row;
+
+		.menu-wrapper {
+			flex: 1;
+			position: unset;
+			flex-direction: row;
+			justify-content: flex-end;
+			padding: 0;
+
+			.menu-item {
+				padding-inline: 1rem;
+
+				&:hover {
+					border-radius: 4px;
+					background: rgba($gray-400, 8%);
+
+					@include dark {
+						background: rgba($gray-200-dark, 8%);
+					}
+				}
+			}
+
+			&.hidden {
+				transform: none;
+			}
 		}
 	}
 }
