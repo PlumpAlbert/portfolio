@@ -19,11 +19,7 @@
 			width: 256px;
 			height: 256px;
 			border-radius: 35% 35% 35% 35%;
-			border: 1px solid $light-gray;
-
-			@include dark {
-				border-color: $light-gray-dark;
-			}
+			border: 1px solid var(--gray-200);
 		}
 
 		&_title {
@@ -50,11 +46,10 @@
 				background: transparent;
 				padding: 0.5rem;
 				border-radius: $radius;
-				border: 1px solid $light-gray;
+				border: 1px solid var(--gray-200);
 
 				@include dark {
-					background: $light-gray-dark;
-					border: 1px solid $light-gray-dark;
+					background: var(--gray-400);
 				}
 			}
 		}
@@ -146,10 +141,10 @@
 			content: "#";
 			font-style: italic;
 			margin-right: 0.25em;
-			color: $dark-gray;
+			color: var(--gray-400);
 
 			@include dark {
-				color: $light-gray-dark;
+				color: var(--gray-200);
 			}
 		}
 	}

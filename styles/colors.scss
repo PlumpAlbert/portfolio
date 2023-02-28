@@ -2,13 +2,17 @@ $foreground: hsl(0, 0%, 10%);
 $background-start: hsl(200, 12%, 90%);
 $background-end: hsl(205, 8%, 100%);
 // mono
-$light-gray: hsl(0, 0%, 84%);
-$dark-gray: hsl(0, 0%, 56%);
+$gray-200: hsl(200, 8%, 84%);
+$gray-400: hsl(200, 8%, 56%);
+// shadows
+$shadow: hsl(200, 8%, 10%);
 
 // dark mode
 $foreground-dark: hsla(200, 23%, 97%, 0.9);
 $background-start-dark: hsl(200, 8%, 10%);
 $background-end-dark: hsl(200, 4%, 8%);
 // mono
-$light-gray-dark: hsl(200, 8%, 56%);
-$dark-gray-dark: hsl(200, 8%, 28%);
+$gray-200-dark: hsl(200, 8%, 56%);
+$gray-400-dark: hsl(200, 8%, 28%);
+// shadows
+$shadow-dark: hsl(200, 12%, 30%);
