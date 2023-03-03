@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react"
 import type { NextPageWithLayout } from "@/types"
+import Head from "next/head"
 // imports
 import PhoneSvg from "@/public/postcards/women-day-2023/phone.svg"
 // styles
@@ -149,6 +150,9 @@ const Page: NextPageWithLayout = () => {
 					}
 				`}
 			</style>
+			<Head>
+				<title>Happy Women&apos;s Day</title>
+			</Head>
 			<PhoneSvg className={x({ svg: true })} />
 			<audio ref={songRef} className={x({ audio: true })}>
 				<source src="https://docs.google.com/uc?authuser=0&export=download&id=1yPZAzC4qbJ1x-V8-KFPglU0JCRKVqe3c" />
