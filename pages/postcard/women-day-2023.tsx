@@ -17,6 +17,8 @@ const Page: NextPageWithLayout = () => {
 		useRef(null)
 	const stopButtonRef: React.MutableRefObject<SVGRectElement | null> =
 		useRef(null)
+	const buttonOneRef: React.MutableRefObject<SVGRectElement | null> =
+		useRef(null)
 
 	useEffect(() => {
 		playButtonRef.current = document.querySelector(
@@ -28,11 +30,15 @@ const Page: NextPageWithLayout = () => {
 		stopButtonRef.current = document.querySelector(
 			"#phone_svg__button_stop"
 		)
+		buttonOneRef.current = document.querySelector("#phone_svg__button_1")
+
 		playButtonRef.current?.classList.add(
 			x({ "play-button--inactive": true })
 		)
-		pauseButtonRef.current?.classList.add(x({ "playback-button": true }))
-		stopButtonRef.current?.classList.add(x({ "playback-button": true }))
+		document.querySelectorAll("[id^=phone_svg__button]").forEach(el => {
+			if (el.id === "phone_svg__buttons") return
+			el.classList.add(x({ "playback-button": true }))
+		})
 
 		function handlePlayClick() {
 			audioRef.current?.play()
@@ -45,9 +51,14 @@ const Page: NextPageWithLayout = () => {
 			audioRef.current.pause()
 			audioRef.current.currentTime = 0
 		}
+		function handleButtonOneClick() {
+			alert("implement me")
+			// TODO
+		}
 		playButtonRef.current?.addEventListener("click", handlePlayClick)
 		pauseButtonRef.current?.addEventListener("click", handlePauseClick)
 		stopButtonRef.current?.addEventListener("click", handleStopClick)
+		buttonOneRef.current?.addEventListener("click", handleButtonOneClick)
 
 		return () => {
 			playButtonRef.current?.removeEventListener("click", handlePlayClick)
@@ -56,6 +67,10 @@ const Page: NextPageWithLayout = () => {
 				handlePauseClick
 			)
 			stopButtonRef.current?.removeEventListener("click", handleStopClick)
+			buttonOneRef.current?.removeEventListener(
+				"click",
+				handleButtonOneClick
+			)
 		}
 	}, [])
 

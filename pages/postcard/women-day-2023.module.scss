@@ -18,6 +18,17 @@
 		}
 	}
 
+	.playback-button {
+		&:active {
+			rect[id*="fg"] {
+				fill: hsl(13, 28%, 90%);
+			}
+			rect[id*="shadow"] {
+				fill: #fef3f0;
+			}
+		}
+	}
+
 	.play-button--inactive {
 		rect[id*="fg"] {
 			fill: hsl(12, 48%, 86%);
@@ -29,17 +40,6 @@
 		&:active {
 			rect[id*="fg"] {
 				fill: hsl(12, 56%, 84%);
-			}
-			rect[id*="shadow"] {
-				fill: #fef3f0;
-			}
-		}
-	}
-
-	.playback-button {
-		&:active {
-			rect[id*="fg"] {
-				fill: hsl(13, 28%, 90%);
 			}
 			rect[id*="shadow"] {
 				fill: #fef3f0;
