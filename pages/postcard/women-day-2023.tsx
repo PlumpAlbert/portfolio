@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react"
+import { useEffect, useRef } from "react"
 import type { NextPageWithLayout } from "@/types"
 // imports
 import PhoneSvg from "@/public/postcards/women-day-2023/phone.svg"
