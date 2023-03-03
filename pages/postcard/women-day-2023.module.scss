@@ -1,0 +1,49 @@
+@import "/styles/colors.scss";
+@import "/styles/mixins.scss";
+
+.root {
+	box-sizing: border-box;
+	flex: 1;
+	display: flex;
+	padding: 2rem 1rem;
+	align-items: center;
+	justify-items: center;
+
+	.svg {
+		display: flex;
+		width: 100%;
+
+		@include for-desktop {
+			max-height: 512px;
+		}
+	}
+
+	.play-button--inactive {
+		rect[id*="fg"] {
+			fill: hsl(12, 48%, 86%);
+		}
+		path {
+			fill: hsl(12, 64%, 30%);
+		}
+
+		&:active {
+			rect[id*="fg"] {
+				fill: hsl(12, 56%, 84%);
+			}
+			rect[id*="shadow"] {
+				fill: #fef3f0;
+			}
+		}
+	}
+
+	.playback-button {
+		&:active {
+			rect[id*="fg"] {
+				fill: hsl(13, 28%, 90%);
+			}
+			rect[id*="shadow"] {
+				fill: #fef3f0;
+			}
+		}
+	}
+}
