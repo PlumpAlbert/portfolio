@@ -25,7 +25,7 @@ const PostCards: NextPage = () => (
 		<Link className={x({ block: true })} href="/postcard/women-day-2023">
 			<Image
 				className={x({ block__image: true })}
-				src="/postcards/valentine/2023/deer.png"
+				src="/postcards/women-day-2023/phone.svg"
 				alt="deer"
 				width={128}
 				height={128}
