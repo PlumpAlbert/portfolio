@@ -64,17 +64,18 @@
 		padding-block: 0.5rem;
 		transform: scaleY(1);
 		transform-origin: top right;
-		transition-property: transform, height;
+		transition-property: transform;
 		transition-duration: 250ms;
 		transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+		will-change: transform;
 		position: absolute;
 		z-index: 999;
-		bottom: calc(-100% - 3px);
+		top: calc(100% - 0.5rem - 3px);
 		left: 0;
 		right: 0;
 
 		.menu-item {
-			padding: 0.5rem 2rem;
+			padding: 1rem 2rem;
 			font-size: 1rem;
 			font-family: var(--font-heading);
 			text-align: center;
@@ -89,10 +90,14 @@
 					background: rgba($background-start-dark, 0.2);
 				}
 			}
+			@include for-desktop {
+				padding-block: 0.5rem;
+			}
 		}
 
 		&.hidden {
 			transform: scaleY(0);
+			background: transparent;
 		}
 	}
 
