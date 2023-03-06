@@ -2,6 +2,7 @@ import { NextPageWithLayout } from "@/types"
 import Head from "next/head"
 import Image from "next/image"
 import { Kaushan_Script } from "@next/font/google"
+import PostcardLayout from "@/components/layouts/Postcard"
 // styles
 import { sassBuilder } from "@/utils/sass"
 import styles from "./2023.module.scss"
@@ -49,6 +50,6 @@ const Valentine: NextPageWithLayout = ({}) => {
 	)
 }
 
-Valentine.getLayout = page => page
+Valentine.getLayout = PostcardLayout
 
 export default Valentine

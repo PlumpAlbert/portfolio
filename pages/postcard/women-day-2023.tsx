@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react"
 import type { NextPageWithLayout } from "@/types"
 import Head from "next/head"
+import PostcardLayout from "@/components/layouts/Postcard"
 // imports
 import PhoneSvg from "@/public/postcards/women-day-2023/phone.svg"
 // styles
@@ -167,6 +168,6 @@ const Page: NextPageWithLayout = () => {
 	)
 }
 
-Page.getLayout = page => page
+Page.getLayout = PostcardLayout
 
 export default Page
