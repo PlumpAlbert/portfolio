@@ -1,10 +1,13 @@
 import "@/styles/globals.scss"
+import { QueryClient, QueryClientProvider } from "react-query"
 import { body, heading, mono } from "@/utils/fonts"
 import type { AppProps } from "next/app"
 import { NextPageWithLayout } from "@/types"
 import MainLayout from "@/components/layouts/MainLayout"
 
 type AppPropsWithLayout = AppProps & { Component: NextPageWithLayout }
+
+const client = new QueryClient()
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
 	let child =
@@ -13,7 +16,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 			: MainLayout(<Component {...pageProps} />)
 
 	return (
-		<>
+		<QueryClientProvider client={client}>
 			<style jsx global>{`
 				:root {
 					--font-sans: ${body.style.fontFamily}, ui-sans, Helvetica,
@@ -45,6 +48,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 				}
 			`}</style>
 			{child}
-		</>
+		</QueryClientProvider>
 	)
 }
