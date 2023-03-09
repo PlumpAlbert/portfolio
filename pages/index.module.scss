@@ -149,6 +149,10 @@
 		}
 	}
 
+	.spinner {
+		margin: auto;
+	}
+
 	@include for-desktop {
 		flex-direction: row;
 
