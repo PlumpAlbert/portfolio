@@ -13,7 +13,7 @@ import { Doughnut } from "react-chartjs-2"
 // page
 import { body } from "@/utils/fonts"
 // api
-import { getData } from "@/pages/api/analytics/rescuetime/month"
+import { getData } from "@/pages/api/stats/rescuetime/month"
 // styles
 import { sassBuilder } from "@/utils/sass"
 import styles from "@/styles/pages/index.module.scss"
