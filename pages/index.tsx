@@ -1,31 +1,49 @@
 import { useCallback } from "react"
-import type {
-	GetServerSideProps,
-	InferGetServerSidePropsType,
-	NextPage,
-} from "next"
+// nextjs
+import type { NextPage } from "next"
 import Head from "next/head"
 import Image from "next/image"
+import Link from "next/link"
+// global
+import { useQuery } from "react-query"
 import { intervalToDuration, formatDuration } from "date-fns"
+import axios from "axios"
 // chart
 import { Chart, ArcElement, Tooltip, Legend, TooltipItem } from "chart.js"
 import { Doughnut } from "react-chartjs-2"
 // page
 import { body } from "@/utils/fonts"
 // api
-import { getData } from "@/pages/api/stats/rescuetime/month"
+import { Productivity } from "@/pages/api/stats/rescuetime/month"
 // styles
 import { sassBuilder } from "@/utils/sass"
-import styles from "@/styles/pages/index.module.scss"
-import Link from "next/link"
+import styles from "./index.module.scss"
+import Loader from "@/components/Loader"
 
 const SC = sassBuilder(styles)
 
 Chart.register(ArcElement, Tooltip, Legend)
 
-const Home: NextPage<
-	InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ chartData }) => {
+const Home: NextPage = () => {
+	const { data, isLoading } = useQuery("rescuetime-data", async function () {
+		const { data } = await axios.get<{
+			data: Record<string, Productivity>
+		}>("/api/stats/rescuetime/month", {
+			params: { date: new Date() },
+		})
+
+		const result = [0, 0, 0, 0, 0]
+		Object.values(data.data ?? {}).forEach(day => {
+			result[0] += day.veryProductive ?? 0
+			result[1] += day.productive ?? 0
+			result[2] += day.neutral ?? 0
+			result[3] += day.distracting ?? 0
+			result[4] += day.veryDistracting ?? 0
+		})
+
+		return result
+	})
+
 	const chartLabel = useCallback<(ctx: TooltipItem<"doughnut">) => string>(
 		({ parsed, dataset }) => {
 			const label = dataset.label || ""
@@ -153,67 +171,73 @@ const Home: NextPage<
 								month.
 							</p>
 							<div className={SC({ "chart-wrapper": true })}>
-								<Doughnut
-									className={SC({ chart: true })}
-									redraw
-									width="100%"
-									height={320}
-									options={{
-										font: { family: body.style.fontFamily },
-										maintainAspectRatio: false,
-										responsive: true,
-										normalized: true,
-										plugins: {
-											legend: {
-												position: "right",
-												labels: {
-													font: {
-														weight: "400",
-														family: body.style
-															.fontFamily,
+								{isLoading ? (
+									<Loader className={SC({spinner: true})} />
+								) : (
+									<Doughnut
+										className={SC({ chart: true })}
+										redraw
+										width="100%"
+										height={320}
+										options={{
+											font: {
+												family: body.style.fontFamily,
+											},
+											maintainAspectRatio: false,
+											responsive: true,
+											normalized: true,
+											plugins: {
+												legend: {
+													position: "right",
+													labels: {
+														font: {
+															weight: "400",
+															family: body.style
+																.fontFamily,
+														},
+														color: "hsl(200, 4%, 44%)",
+														boxWidth: 24,
+														borderRadius: 4,
+														boxHeight: 12,
+														padding: 16,
 													},
-													color: "hsl(200, 4%, 44%)",
-													boxWidth: 24,
+												},
+												tooltip: {
+													callbacks: {
+														label: chartLabel,
+													},
+												},
+											},
+										}}
+										data={{
+											labels: [
+												"Very productive",
+												"Productive",
+												"Neutral",
+												"Distracting",
+												"Very distracting",
+											],
+											datasets: [
+												{
+													normalized: true,
+													spacing: 2,
+													label: "Time spent",
+													backgroundColor: [
+														"#8EABE6",
+														"#87EEBB",
+														"#D9D9D9",
+														"#E9E463",
+														"#FF8766",
+													],
+													borderJoinStyle: "round",
 													borderRadius: 4,
-													boxHeight: 12,
-													padding: 16,
+													borderWidth: 0,
+													data,
 												},
-											},
-											tooltip: {
-												callbacks: {
-													label: chartLabel,
-												},
-											},
-										},
-									}}
-									data={{
-										labels: [
-											"Very productive",
-											"Productive",
-											"Neutral",
-											"Distracting",
-											"Very distracting",
-										],
-										datasets: [
-											{
-												normalized: true,
-												spacing: 2,
-												label: "Time spent",
-												backgroundColor: [
-													"#8EABE6",
-													"#87EEBB",
-													"#D9D9D9",
-													"#E9E463",
-													"#FF8766",
-												],
-												borderJoinStyle: "round",
-												borderRadius: 4,
-												borderWidth: 0,
-												data: chartData,
-											},
-										],
-									}}
-								/>
+											],
+										}}
+									/>
+								)}
 							</div>
 						</div>
 					</div>
@@ -221,31 +245,6 @@ const Home: NextPage<
 			</main>
 		</>
 	)
-}
-
-export const getServerSideProps: GetServerSideProps<{
-	chartData: [number, number, number, number, number]
-}> = async ({ res }) => {
-	res.setHeader(
-		"Cache-Control",
-		"public,s-maxage=86400,stale-while-revalidate=59"
-	)
-	const data = await getData(new Date())
-	const chartData = new Array(5).fill(0) as [
-		number,
-		number,
-		number,
-		number,
-		number
-	]
-	Object.values(data).forEach(day => {
-		chartData[0] += day.veryProductive ?? 0
-		chartData[1] += day.productive ?? 0
-		chartData[2] += day.neutral ?? 0
-		chartData[3] += day.distracting ?? 0
-		chartData[4] += day.veryDistracting ?? 0
-	})
-	return { props: { chartData } }
 }
 
 export default Home
