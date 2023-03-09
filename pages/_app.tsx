@@ -1,4 +1,5 @@
 import "@/styles/globals.scss"
+import { ReactQueryDevtools } from "react-query/devtools"
 import { QueryClient, QueryClientProvider } from "react-query"
 import { body, heading, mono } from "@/utils/fonts"
 import type { AppProps } from "next/app"
@@ -48,6 +49,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 				}
 			`}</style>
 			{child}
+			<ReactQueryDevtools initialIsOpen={false} />
 		</QueryClientProvider>
 	)
 }
