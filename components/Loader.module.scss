@@ -1,0 +1,23 @@
+@import "/styles/colors.scss";
+@import "/styles/mixins.scss";
+
+.spinner {
+	color: $gray-400;
+	animation-name: spin;
+	animation-duration: 750ms;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+
+	@include dark {
+		color: $gray-400-dark;
+	}
+}
+
+@keyframes spin {
+	0% {
+		rotate: 0;
+	}
+	100% {
+		rotate: 360deg;
+	}
+}
