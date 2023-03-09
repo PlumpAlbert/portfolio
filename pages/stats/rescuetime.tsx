@@ -1,4 +1,5 @@
 import type { NextPage } from "next"
+import Head from "next/head"
 import { useState } from "react"
 import { useQuery } from "react-query"
 import axios from "axios"
@@ -61,77 +62,86 @@ const RescueTimePage: NextPage = () => {
 	}
 
 	return (
-		<main className={x({ root: true })}>
-			{isLoading && (
-				<div className={x({ "spinner-wrapper": true })}>
-					<i className={x({ spinner: true }, "msr")}>sync</i>
-				</div>
-			)}
-			<div className={x({ table: true })}>
-				<div className={x({ head: true })}>
-					<div className={x({ row: true })}>
-						<p
-							className={x({
-								cell: true,
-								header: true,
-								date: true,
-							})}
-						>
-							<i className="msr">calendar_month</i>
-						</p>
-						<p
-							className={x({
-								cell: true,
-								header: true,
-								"very-productive": true,
-							})}
-						>
-							<i className="msr">keyboard_double_arrow_up</i>
-						</p>
-						<p
-							className={x({
-								cell: true,
-								header: true,
-								productive: true,
-							})}
-						>
-							<i className="msr">expand_less</i>
-						</p>
-						<p
-							className={x({
-								cell: true,
-								header: true,
-								neutral: true,
-							})}
-						>
-							<i className="msr">remove</i>
-						</p>
-						<p
-							className={x({
-								cell: true,
-								header: true,
-								distracting: true,
-							})}
-						>
-							<i className="msr">expand_more</i>
-						</p>
-						<p
-							className={x({
-								cell: true,
-								header: true,
-								"very-distracting": true,
-							})}
-						>
-							<i className="msr">keyboard_double_arrow_down</i>
-						</p>
+		<>
+			<Head>
+				<title>RescueTime stats</title>
+			</Head>
+			<main className={x({ root: true })}>
+				{isLoading && (
+					<div className={x({ "spinner-wrapper": true })}>
+						<i className={x({ spinner: true }, "msr")}>sync</i>
+					</div>
+				)}
+				<div className={x({ table: true })}>
+					<div className={x({ head: true })}>
+						<div className={x({ row: true })}>
+							<p
+								className={x({
+									cell: true,
+									header: true,
+									date: true,
+								})}
+							>
+								<i className="msr">calendar_month</i>
+							</p>
+							<p
+								className={x({
+									cell: true,
+									header: true,
+									"very-productive": true,
+								})}
+							>
+								<i className="msr">keyboard_double_arrow_up</i>
+							</p>
+							<p
+								className={x({
+									cell: true,
+									header: true,
+									productive: true,
+								})}
+							>
+								<i className="msr">expand_less</i>
+							</p>
+							<p
+								className={x({
+									cell: true,
+									header: true,
+									neutral: true,
+								})}
+							>
+								<i className="msr">remove</i>
+							</p>
+							<p
+								className={x({
+									cell: true,
+									header: true,
+									distracting: true,
+								})}
+							>
+								<i className="msr">expand_more</i>
+							</p>
+							<p
+								className={x({
+									cell: true,
+									header: true,
+									"very-distracting": true,
+								})}
+							>
+								<i className="msr">
+									keyboard_double_arrow_down
+								</i>
+							</p>
+						</div>
+					</div>
+					<div className={x({ body: true })}>
+						{data &&
+							Object.keys(data).map(key =>
+								printRow(key, data[key])
+							)}
 					</div>
 				</div>
-				<div className={x({ body: true })}>
-					{data &&
-						Object.keys(data).map(key => printRow(key, data[key]))}
-				</div>
-			</div>
-		</main>
+			</main>
+		</>
 	)
 }
 
