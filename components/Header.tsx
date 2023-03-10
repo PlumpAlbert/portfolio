@@ -1,17 +1,21 @@
+import { useRef, useState } from "react"
+// next
 import Image from "next/image"
+import Link from "next/link"
+// imports
+import menuItems from "@/utils/menu"
+// styles
 import styles from "./Header.module.scss"
 import { sassBuilder } from "@/utils/sass"
-import menuItems from "@/utils/menu"
-import Link from "next/link"
-import { useState } from "react"
 
 const x = sassBuilder(styles)
 
 const Header = () => {
+	const rootRef = useRef<HTMLElement>(null)
 	const [showMenu, setShowMenu] = useState(false)
 
 	return (
-		<header className={x({ header: true })}>
+		<header ref={rootRef} className={x({ header: true })}>
 			<div className={x({ text: true })}>
 				<Link className={x({ "home-link": true })} href="/">
 					<Image
@@ -28,7 +32,12 @@ const Header = () => {
 				<button
 					className={x({ "icon-button": true })}
 					onClick={() => setShowMenu(!showMenu)}
-					onBlur={() => setShowMenu(false)}
+					onBlur={({ relatedTarget }) => {
+						if (rootRef.current?.contains(relatedTarget)) {
+							return
+						}
+						setShowMenu(false)
+					}}
 				>
 					<i className={x({ icon: true, menu: true }, "msr")}>menu</i>
 				</button>
@@ -39,6 +48,10 @@ const Header = () => {
 						href={item.href}
 						key={item.href}
 						className={x({ "menu-item": true })}
+						onClick={e => {
+							e.stopPropagation()
+							setShowMenu(false)
+						}}
 					>
 						{item.label}
 					</Link>
