@@ -1,4 +1,4 @@
-import { useCallback } from "react"
+import { useCallback, useMemo } from "react"
 // nextjs
 import type { NextPage } from "next"
 import Head from "next/head"
@@ -25,24 +25,28 @@ const SC = sassBuilder(styles)
 Chart.register(ArcElement, Tooltip, Legend)
 
 const Home: NextPage = () => {
-	const { data, isLoading } = useQuery("rescuetime-data", async function () {
-		const { data } = await axios.get<{
-			data: Record<string, Productivity>
-		}>("/api/stats/rescuetime/month", {
-			params: { date: new Date() },
-		})
+	const { data, isLoading } = useQuery(
+		"rescuetime-data",
+		async function () {
+			const { data } = await axios.get<{
+				data: Record<string, Productivity>
+			}>("/api/stats/rescuetime/month", {
+				params: { date: new Date() },
+			})
 
-		const result = [0, 0, 0, 0, 0]
-		Object.values(data.data ?? {}).forEach(day => {
-			result[0] += day.veryProductive ?? 0
-			result[1] += day.productive ?? 0
-			result[2] += day.neutral ?? 0
-			result[3] += day.distracting ?? 0
-			result[4] += day.veryDistracting ?? 0
-		})
+			const result = [0, 0, 0, 0, 0]
+			Object.values(data.data ?? {}).forEach(day => {
+				result[0] += day.veryProductive ?? 0
+				result[1] += day.productive ?? 0
+				result[2] += day.neutral ?? 0
+				result[3] += day.distracting ?? 0
+				result[4] += day.veryDistracting ?? 0
+			})
 
-		return result
-	})
+			return result
+		},
+		{ cacheTime: 60000 }
+	)
 
 	const chartLabel = useCallback<(ctx: TooltipItem<"doughnut">) => string>(
 		({ parsed, dataset }) => {
@@ -57,6 +61,39 @@ const Home: NextPage = () => {
 			})}`
 		},
 		[]
+	)
+
+	const chartData = useMemo<
+		import("chart.js").ChartData<"doughnut", number[] | undefined, string>
+	>(
+		() => ({
+			labels: [
+				"Very productive",
+				"Productive",
+				"Neutral",
+				"Distracting",
+				"Very distracting",
+			],
+			datasets: [
+				{
+					normalized: true,
+					spacing: 2,
+					label: "Time spent",
+					backgroundColor: [
+						"#8EABE6",
+						"#87EEBB",
+						"#D9D9D9",
+						"#E9E463",
+						"#FF8766",
+					],
+					borderJoinStyle: "round",
+					borderRadius: 4,
+					borderWidth: 0,
+					data,
+				},
+			],
+		}),
+		[data]
 	)
 
 	return (
@@ -172,11 +209,10 @@ const Home: NextPage = () => {
 							</p>
 							<div className={SC({ "chart-wrapper": true })}>
 								{isLoading ? (
-									<Loader className={SC({spinner: true})} />
+									<Loader className={SC({ spinner: true })} />
 								) : (
 									<Doughnut
 										className={SC({ chart: true })}
-										redraw
 										width="100%"
 										height={320}
 										options={{
@@ -209,33 +245,7 @@ const Home: NextPage = () => {
 												},
 											},
 										}}
-										data={{
-											labels: [
-												"Very productive",
-												"Productive",
-												"Neutral",
-												"Distracting",
-												"Very distracting",
-											],
-											datasets: [
-												{
-													normalized: true,
-													spacing: 2,
-													label: "Time spent",
-													backgroundColor: [
-														"#8EABE6",
-														"#87EEBB",
-														"#D9D9D9",
-														"#E9E463",
-														"#FF8766",
-													],
-													borderJoinStyle: "round",
-													borderRadius: 4,
-													borderWidth: 0,
-													data,
-												},
-											],
-										}}
+										data={chartData}
 									/>
 								)}
 							</div>
