@@ -1,4 +1,4 @@
-import { endOfMonth, parseISO, startOfMonth } from "date-fns"
+import { addDays, endOfMonth, isAfter, parseISO, startOfMonth } from "date-fns"
 import { zonedTimeToUtc, toDate } from "date-fns-tz"
 import { z } from "zod"
 import { NextApiHandler } from "next"
@@ -17,10 +17,10 @@ export type Productivity = {
 	veryDistracting?: number
 }
 
-export const getData = async (month: Date) => {
+export const getData = async (start: Date, end: Date) => {
 	const params = {
-		restrict_begin: zonedTimeToUtc(startOfMonth(month), "+00:00"),
-		restrict_end: zonedTimeToUtc(endOfMonth(month), "+00:00"),
+		restrict_begin: start,
+		restrict_end: end,
 		format: "csv",
 		by: "interval",
 		interval: "day",
@@ -97,10 +97,43 @@ const handler: NextApiHandler = async (req, res) => {
 	}
 	const date = zonedTimeToUtc(parseISO(result.data.date), "+00:00")
 
-	res.setHeader('Cache-Control', 'public, max-age=1800')
+	const start = zonedTimeToUtc(startOfMonth(date), "+00:00")
+	const end = zonedTimeToUtc(endOfMonth(date), "+00:00")
+	console.debug(
+		'[rescuetime/month] -> requesting data from "%s" to "%s"',
+		start,
+		end
+	)
+
+	const rescueTimeData = await getData(start, end)
+
+	for (let now = new Date(start); !isAfter(now, end); now = addDays(now, 1)) {
+		const [key] = now.toISOString().split(".")
+		console.debug('[rescuetime/month] -> checking "%s" date. ', now, end)
+		if (rescueTimeData[key]) {
+			continue
+		}
+		console.debug('[rescuetime/month] -> appending empty data: "%s"', key)
+		rescueTimeData[key] = {
+			veryProductive: 0,
+			productive: 0,
+			neutral: 0,
+			distracting: 0,
+			veryDistracting: 0,
+		}
+	}
+
+	if (process.env.NODE_ENV !== "development") {
+		res.setHeader("Cache-Control", "public, max-age=1800")
+	}
 	return res.status(200).json({
 		error: false,
-		data: await getData(date),
+		data: Object.keys(rescueTimeData)
+			.sort()
+			.reduce<Record<string, Productivity>>((res, key) => {
+				res[key] = rescueTimeData[key]
+				return res
+			}, {}),
 	})
 }
 
