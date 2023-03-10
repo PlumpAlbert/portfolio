@@ -5,7 +5,7 @@ export type MenuItem = {
 
 const menuItems: MenuItem[] = [
 	{ label: "Postcards", href: "/postcard" },
-	{ label: "Statistics", href: "/analytics" },
+	{ label: "Statistics", href: "/stats" },
 ]
 
 export default menuItems
