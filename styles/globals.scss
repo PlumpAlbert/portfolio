@@ -44,6 +44,38 @@ a {
 	text-decoration: none;
 }
 
+/** COMPONENTS */
+.icon-button {
+	font-size: 1.25rem;
+	padding: 0.75rem;
+	line-height: 1em;
+	border-style: none;
+	border-radius: 50%;
+	appearance: none;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	background: transparent;
+	transition: background 125ms ease-out;
+
+	.msr {
+		font-size: inherit;
+	}
+
+	&:hover {
+		background: rgba($gray-200, 0.48);
+
+		@include dark {
+			background: rgba($gray-200-dark, 0.48);
+		}
+
+		&:disabled {
+			background: transparent;
+		}
+	}
+}
+
 @include dark {
 	:root {
 		--foreground: #{$foreground-dark};
