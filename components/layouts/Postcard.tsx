@@ -4,7 +4,7 @@ import styles from "./Postcard.module.scss"
 
 const PostcardLayout: ILayout = page => (
 	<div className={styles.root}>
-		<Header />
+		<Header className={styles.header} />
 		{page}
 	</div>
 )
