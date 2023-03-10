@@ -1,8 +1,10 @@
-import type { NextPage } from "next"
-import Head from "next/head"
 import { useState } from "react"
 import { useQuery } from "react-query"
+// next
 import axios from "axios"
+import type { NextPage } from "next"
+import Head from "next/head"
+// date-fns
 import intervalToDuration from "date-fns/intervalToDuration"
 // imports
 import { Productivity } from "@/pages/api/stats/rescuetime/month"
