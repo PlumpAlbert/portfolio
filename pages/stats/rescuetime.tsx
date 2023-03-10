@@ -1,5 +1,5 @@
 import { MouseEventHandler, useCallback, useState } from "react"
-import { useQuery, useQueryClient } from "react-query"
+import { useQuery } from "react-query"
 // next
 import axios from "axios"
 import type { NextPage } from "next"
@@ -23,7 +23,6 @@ function getDuration(time?: number) {
 
 const RescueTimePage: NextPage = () => {
 	const [date, setDate] = useState(new Date())
-	const client = useQueryClient()
 
 	const { isLoading, data } = useQuery(
 		["analytics", date] as const,
@@ -32,7 +31,7 @@ const RescueTimePage: NextPage = () => {
 			const { data } = await axios.get<{
 				data: Record<string, Productivity>
 			}>("/api/stats/rescuetime/month", {
-				params: { date: date.toISOString() },
+				params: { date },
 			})
 			return data.data
 		}
@@ -56,22 +55,50 @@ const RescueTimePage: NextPage = () => {
 		const d = new Date(date)
 		return (
 			<tr key={date} className={x({ row: true })}>
-				<td className={x({ cell: true, date: true })}>
-					{d.toLocaleDateString()}
-				</td>
-				<td className={x({ cell: true, "very-productive": true })}>
+				<td className={x({ cell: true, date: true })}>{d.getDate()}</td>
+				<td
+					className={x({
+						cell: true,
+						"very-productive": true,
+						dim: productivity.veryProductive === 0,
+					})}
+				>
 					{getDuration(productivity.veryProductive)}
 				</td>
-				<td className={x({ cell: true, productive: true })}>
+				<td
+					className={x({
+						cell: true,
+						productive: true,
+						dim: productivity.productive === 0,
+					})}
+				>
 					{getDuration(productivity.productive)}
 				</td>
-				<td className={x({ cell: true, neutral: true })}>
+				<td
+					className={x({
+						cell: true,
+						neutral: true,
+						dim: productivity.neutral === 0,
+					})}
+				>
 					{getDuration(productivity.neutral)}
 				</td>
-				<td className={x({ cell: true, distracting: true })}>
+				<td
+					className={x({
+						cell: true,
+						distracting: true,
+						dim: productivity.distracting === 0,
+					})}
+				>
 					{getDuration(productivity.distracting)}
 				</td>
-				<td className={x({ cell: true, "very-distracting": true })}>
+				<td
+					className={x({
+						cell: true,
+						"very-distracting": true,
+						dim: productivity.veryDistracting === 0,
+					})}
+				>
 					{getDuration(productivity.veryDistracting)}
 				</td>
 			</tr>

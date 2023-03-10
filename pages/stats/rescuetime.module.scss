@@ -9,7 +9,7 @@
 	.header {
 		display: flex;
 		gap: 1.5rem;
-		padding: 0 2rem;
+		padding-inline: 1rem;
 		align-items: center;
 
 		&__title {
@@ -39,10 +39,22 @@
 	}
 
 	.table {
+		font-size: 1rem;
+		padding-inline: 1rem;
+
+		@include for-desktop {
+			align-self: center;
+		}
+
 		.row {
 			.cell {
 				text-align: center;
 				font-family: var(--font-mono);
+				font-size: 0.875rem;
+
+				@include for-desktop {
+					padding: 0.5em 1rem;
+				}
 
 				&.very-productive {
 					color: #8eabe6;
@@ -61,6 +73,10 @@
 				}
 				&.very-distracting {
 					color: #ff8766;
+				}
+
+				&.dim {
+					opacity: 0.48;
 				}
 			}
 		}
