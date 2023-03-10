@@ -41,50 +41,93 @@
 	.table {
 		font-size: 1rem;
 		padding-inline: 1rem;
+		border-collapse: collapse;
 
 		@include for-desktop {
 			align-self: center;
 		}
 
-		.row {
-			.cell {
-				text-align: center;
-				font-family: var(--font-mono);
-				font-size: 0.875rem;
+		.cell {
+			text-align: center;
+			font-family: var(--font-body);
+			font-size: 0.875rem;
+			padding-block: 0.5em;
 
-				@include for-desktop {
-					padding: 0.5em 1rem;
-				}
+			@include for-desktop {
+				padding: 0.5em 1rem;
+			}
 
-				&.very-productive {
+			&.very-productive {
+				color: #628bdd;
+				@include dark {
 					color: #8eabe6;
 				}
-				&.productive {
+			}
+			&.productive {
+				color: #17a35d;
+				@include dark {
 					color: #87eebb;
 				}
-				&.neutral {
-					color: $gray-400;
-					@include dark {
-						color: $gray-400-dark;
-					}
+			}
+			&.neutral {
+				color: $gray-400;
+				@include dark {
+					color: $gray-400-dark;
 				}
-				&.distracting {
+			}
+			&.distracting {
+				color: #e89e61;
+				@include dark {
 					color: #e9e463;
 				}
-				&.very-distracting {
+			}
+			&.very-distracting {
+				color: #e8616a;
+				@include dark {
 					color: #ff8766;
 				}
+			}
 
-				&.dim {
-					opacity: 0.48;
-				}
+			&.dim {
+				opacity: 0.48;
 			}
 		}
 
 		.body {
+			.row:nth-child(2n + 1) {
+				background: var(--background-start);
+			}
+
 			.cell {
 				text-align: center;
+				cursor: pointer;
+
+				&.date {
+					font-family: var(--font-body);
+				}
 			}
+		}
+
+		.footer {
+			border-top: 3px solid var(--gray-200);
+		}
+	}
+
+	.chart-wrapper {
+		display: flex;
+		padding: 2rem 1rem;
+		min-height: 240px;
+		height: fit-content;
+	}
+
+	.content {
+		display: flex;
+		flex-direction: column;
+
+		@include for-desktop {
+			flex-direction: row;
+			justify-content: space-between;
+			padding-inline: 1rem;
 		}
 	}
 }
