@@ -97,6 +97,7 @@ const handler: NextApiHandler = async (req, res) => {
 	}
 	const date = zonedTimeToUtc(parseISO(result.data.date), "+00:00")
 
+	res.setHeader('Cache-Control', 'public, max-age=1800')
 	return res.status(200).json({
 		error: false,
 		data: await getData(date),
