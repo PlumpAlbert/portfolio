@@ -1,4 +1,5 @@
 import { endOfMonth, parseISO, startOfMonth } from "date-fns"
+import { zonedTimeToUtc, toDate } from "date-fns-tz"
 import { z } from "zod"
 import { NextApiHandler } from "next"
 import { formatError } from "@/utils/zod"
@@ -18,8 +19,8 @@ export type Productivity = {
 
 export const getData = async (month: Date) => {
 	const params = {
-		restrict_begin: startOfMonth(month),
-		restrict_end: endOfMonth(month),
+		restrict_begin: zonedTimeToUtc(startOfMonth(month), "+00:00"),
+		restrict_end: zonedTimeToUtc(endOfMonth(month), "+00:00"),
 		format: "csv",
 		by: "interval",
 		interval: "day",
@@ -94,7 +95,7 @@ const handler: NextApiHandler = async (req, res) => {
 			message: formatError(result.error),
 		})
 	}
-	const date = parseISO(result.data.date)
+	const date = zonedTimeToUtc(parseISO(result.data.date), "+00:00")
 
 	return res.status(200).json({
 		error: false,
