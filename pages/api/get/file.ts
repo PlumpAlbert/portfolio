@@ -16,8 +16,5 @@ export default async function getMusic(
 	res.status(file.status)
 	res.setHeader("Content-Type", file.headers["content-type"] as string)
 	res.setHeader("Content-Length", file.headers["content-length"] as string)
-	// file.arrayBuffer().then(buf => {
-	// 	res.send(buf)
-	// })
 	file.data.pipe(res)
 }
