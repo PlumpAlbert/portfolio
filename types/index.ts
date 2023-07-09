@@ -8,3 +8,9 @@ export interface ILayout {
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
 	getLayout?: ILayout
 }
+
+declare module "next" {
+	type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+		getLayout?: ILayout
+	}
+}
