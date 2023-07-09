@@ -16,10 +16,11 @@ import { sassBuilder } from "@/utils/sass"
 const SC = sassBuilder(styles)
 const lora = Lora({ weight: ["400", "500"] })
 
-const BooksPage: NextPageWithLayout = props => {
+const BooksPage: NextPageWithLayout = () => {
 	const containerRef = useRef<HTMLDivElement>(null)
 	const surferRef =
 		useRef<ReturnType<typeof import("wavesurfer.js").create>>()
+
 	const [playing, setPlaying] = useState(false)
 
 	useEffect(() => {
@@ -27,23 +28,30 @@ const BooksPage: NextPageWithLayout = props => {
 			if (!containerRef.current || surferRef.current) return
 
 			surferRef.current = module.default.create({
+				height: 200,
 				container: containerRef.current,
-				responsive: true,
+				scrollParent: true,
+				autoCenter: true,
 				cursorWidth: 0,
 				barWidth: 2,
-				barHeight: 10,
+				barHeight: 8,
 				waveColor: "#ffffff",
-				progressColor: "#ffee00",
+				progressColor: "#8E6081",
 			})
+
 			surferRef.current.load(
 				"/api/get/file?id=1RGgXq-243SF20S8fT8jrW4npZUWWvADP"
 			)
-			surferRef.current.on("ready", function (e) {
-				console.debug("--> surfer is ready", e)
-			})
+
+			surferRef.current.on("finish", () => setPlaying(false))
+			surferRef.current.on("play", () => setPlaying(true))
+			surferRef.current.on("pause", () => setPlaying(false))
 		})
 
-		return () => surferRef.current?.destroy()
+		return () => {
+			surferRef.current?.destroy()
+			surferRef.current = undefined
+		}
 	}, [])
 
 	return (
