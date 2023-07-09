@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react"
 import { NextPageWithLayout } from "next"
 import Head from "next/head"
 import { Lora } from "@next/font/google"
@@ -7,6 +8,7 @@ import IconButton from "@mui/material/IconButton"
 import ForwardIcon from "@mui/icons-material/FastForwardRounded"
 import RewindIcon from "@mui/icons-material/FastRewindRounded"
 import PlayIcon from "@mui/icons-material/PlayArrowRounded"
+import PauseIcon from "@mui/icons-material/PauseRounded"
 
 import styles from "./index.module.scss"
 import { sassBuilder } from "@/utils/sass"
@@ -15,6 +17,35 @@ const SC = sassBuilder(styles)
 const lora = Lora({ weight: ["400", "500"] })
 
 const BooksPage: NextPageWithLayout = props => {
+	const containerRef = useRef<HTMLDivElement>(null)
+	const surferRef =
+		useRef<ReturnType<typeof import("wavesurfer.js").create>>()
+	const [playing, setPlaying] = useState(false)
+
+	useEffect(() => {
+		import("wavesurfer.js").then(async function (module) {
+			if (!containerRef.current || surferRef.current) return
+
+			surferRef.current = module.default.create({
+				container: containerRef.current,
+				responsive: true,
+				cursorWidth: 0,
+				barWidth: 2,
+				barHeight: 10,
+				waveColor: "#ffffff",
+				progressColor: "#ffee00",
+			})
+			surferRef.current.load(
+				"/api/get/file?id=1RGgXq-243SF20S8fT8jrW4npZUWWvADP"
+			)
+			surferRef.current.on("ready", function (e) {
+				console.debug("--> surfer is ready", e)
+			})
+		})
+
+		return () => surferRef.current?.destroy()
+	}, [])
+
 	return (
 		<main className={SC({ root: true })}>
 			<header className={SC({ header: true })}>
@@ -27,6 +58,12 @@ const BooksPage: NextPageWithLayout = props => {
 				<h2 className={SC({ content__header: true }, lora.className)}>
 					The Book
 				</h2>
+
+				<div
+					ref={containerRef}
+					id="surfer-container"
+					className={SC({ surfer: true })}
+				></div>
 			</section>
 
 			<footer className={SC({ footer: true })}>
@@ -34,6 +71,7 @@ const BooksPage: NextPageWithLayout = props => {
 					size="large"
 					className={SC({ button: true })}
 					color="inherit"
+					onClick={() => surferRef.current?.skipBackward(10)}
 				>
 					<RewindIcon />
 				</IconButton>
@@ -42,14 +80,23 @@ const BooksPage: NextPageWithLayout = props => {
 					size="large"
 					className={SC({ button: true })}
 					color="inherit"
+					onClick={() => {
+						surferRef.current?.playPause()
+						setPlaying(!playing)
+					}}
 				>
-					<PlayIcon fontSize="large" />
+					{playing ? (
+						<PauseIcon fontSize="large" />
+					) : (
+						<PlayIcon fontSize="large" />
+					)}
 				</IconButton>
 
 				<IconButton
 					size="large"
 					className={SC({ button: true })}
 					color="inherit"
+					onClick={() => surferRef.current?.skipForward(10)}
 				>
 					<ForwardIcon />
 				</IconButton>
