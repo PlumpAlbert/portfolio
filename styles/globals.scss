@@ -1,15 +1,24 @@
-@import "./icons.css";
-@import "./colors.scss";
-@import "./mixins.scss";
+@use "./icons.css" as *;
+@use "./mixins.scss" as *;
+@use "./colors/palette.scss" as *;
 
 :root {
+	@import "./colors/light.scss";
+
 	--foreground: #{$foreground};
-	--background-start: #{$background-start};
-	--background-end: #{$background-end};
+	--background: #{$background};
 	// black
+	--gray-50: #{$gray-50};
+	--gray-100: #{$gray-100};
 	--gray-200: #{$gray-200};
+	--gray-300: #{$gray-300};
 	--gray-400: #{$gray-400};
+	--gray-500: #{$gray-500};
 	--gray-600: #{$gray-600};
+	--gray-700: #{$gray-700};
+	--gray-800: #{$gray-800};
+	--gray-900: #{$gray-900};
+	--gray-950: #{$gray-950};
 }
 
 * {
@@ -19,25 +28,17 @@
 }
 
 html,
-body {
+body,
+div#__next {
+	display: flex;
+	flex-direction: column;
 	height: 100%;
-	overflow-x: hidden;
-	font-family: var(--font-sans);
+	font-family: var(--font-body);
 }
 
 body {
 	color: var(--foreground);
-	background: linear-gradient(to bottom, transparent, var(--background-end))
-		var(--background-start);
-}
-
-div#__next {
-	display: flex;
-	flex-direction: column;
-	min-height: 100%;
-	height: fit-content;
-	margin: 0 auto;
-	max-width: 1024px;
+	background: var(--background);
 }
 
 a {
@@ -65,10 +66,10 @@ a {
 	}
 
 	&:hover {
-		background: rgba($gray-200, 0.48);
+		background: rgba(var(--gray-200), 0.48);
 
 		@include dark {
-			background: rgba($gray-200-dark, 0.48);
+			background: rgba(var(--gray-400), 0.48);
 		}
 
 		&:disabled {
@@ -78,14 +79,23 @@ a {
 }
 
 @include dark {
+	@import "./colors/dark.scss";
+
 	:root {
-		--foreground: #{$foreground-dark};
-		--background-start: #{$background-start-dark};
-		--background-end: #{$background-end-dark};
+		--foreground: #{$foreground};
+		--background: #{$background};
 		// black
-		--gray-200: #{$gray-200-dark};
-		--gray-400: #{$gray-400-dark};
-		--gray-600: #{$gray-600-dark};
+		--gray-50: #{$gray-50};
+		--gray-100: #{$gray-100};
+		--gray-200: #{$gray-200};
+		--gray-300: #{$gray-300};
+		--gray-400: #{$gray-400};
+		--gray-500: #{$gray-500};
+		--gray-600: #{$gray-600};
+		--gray-700: #{$gray-700};
+		--gray-800: #{$gray-800};
+		--gray-900: #{$gray-900};
+		--gray-950: #{$gray-950};
 	}
 
 	html {

@@ -1,15 +1,14 @@
-@import "/styles/colors.scss";
 @import "/styles/mixins.scss";
 
 .spinner {
-	color: $gray-400;
+	color: var(--gray-400);
 	animation-name: spin;
 	animation-duration: 750ms;
 	animation-timing-function: linear;
 	animation-iteration-count: infinite;
 
 	@include dark {
-		color: $gray-400-dark;
+		color: var(--gray-200);
 	}
 }
 

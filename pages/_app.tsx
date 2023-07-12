@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 		<QueryClientProvider client={client}>
 			<style jsx global>{`
 				:root {
-					--font-sans: ${body.style.fontFamily}, ui-sans, Helvetica,
+					--font-body: ${body.style.fontFamily}, ui-sans, Helvetica,
 						"SF Pro", "Segoe UI", Arial, sans-serif;
 					--font-heading: ${heading.style.fontFamily},
 						${body.style.fontFamily}, ui-sans, Helvetica, "SF Pro",
@@ -41,7 +41,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 				}
 
 				.sans {
-					font-family: var(--font-sans);
+					font-family: var(--font-body);
 				}
 
 				code {
