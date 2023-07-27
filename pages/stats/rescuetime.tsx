@@ -27,10 +27,23 @@ Chart.register(ArcElement, Tooltip, Legend)
 const x = sassBuilder(styles)
 
 function getDuration(time?: number) {
+	let result = ""
 	const duration = intervalToDuration({ start: 0, end: (time ?? 0) * 1000 })
-	return `${duration.hours?.toString().padStart(2, "0")}:${duration.minutes
-		?.toString()
-		.padStart(2, "0")}`
+
+	if (duration.weeks) {
+		const value = duration.weeks.toString()
+		result += `${value}w `
+	}
+
+	if (duration.days) {
+		const value = duration.days.toString()
+		result += `${value}d `
+	}
+
+	result += `${duration.hours?.toString()?.padStart?.(2, "0") ?? "00"}:`
+	result += `${duration.minutes?.toString()?.padStart?.(2, "0") ?? "00"}`
+
+	return result
 }
 
 function getSummary(
